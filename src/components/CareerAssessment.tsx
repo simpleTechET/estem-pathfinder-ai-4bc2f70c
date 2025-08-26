@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronRight, CheckCircle, ArrowRight, Target, Brain, Heart, User, Briefcase, Users, BookOpen, Lightbulb, Award, Globe, BarChart, ArrowLeft } from 'lucide-react';
+import { ChevronRight, CheckCircle, ArrowRight, Target, Brain, Heart, User, Briefcase, Users, BookOpen, Lightbulb, Award, Globe, BarChart, ArrowLeft, FlaskConical, Calculator, MapPin } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -14,82 +15,138 @@ import alexThompson from '@/assets/alex-thompson.jpg';
 import drMichaelFoster from '@/assets/dr-michael-foster.jpg';
 
 const CareerAssessment = () => {
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [responses, setResponses] = useState({});
   const [results, setResults] = useState(null);
   const [showingResults, setShowingResults] = useState(false);
   const [big5Scores, setBig5Scores] = useState(null);
+  const [showDeeperAssessment, setShowDeeperAssessment] = useState(false);
+  const [satisfiedWithResults, setSatisfiedWithResults] = useState(null);
 
   const professionalsData = [
     {
       name: "Dr. Sarah Chen",
-      role: "Machine Learning Engineer",
+      role: "AI Research Scientist",
       image: drSarahChen,
-      path: "Started in biology → learned Python → transitioned to AI research",
-      quote: "I never thought my biology background would be my superpower in ML.",
+      path: "Grade 12 → Computer Science degree → AI research internship → Graduate school",
+      quote: "I started coding in grade 11 and fell in love with making machines think.",
       personality: "High openness, moderate conscientiousness"
     },
     {
       name: "Marcus Rodriguez",
-      role: "Quantitative Analyst",
+      role: "Financial Technology Analyst",
       image: marcusRodriguez,
-      path: "Physics degree → self-taught programming → financial modeling",
-      quote: "Math is universal - it opens doors everywhere.",
+      path: "Grade 12 → Mathematics & Economics → Banking internship → Fintech company",
+      quote: "Numbers tell stories about how the world works.",
       personality: "High conscientiousness, moderate openness"
     },
     {
       name: "Dr. Aisha Patel",
-      role: "Molecular Biologist",
+      role: "Biomedical Engineer",
       image: drAishaPatel,
-      path: "Chemistry major → research experience → PhD → biotech startup",
-      quote: "Every failed experiment taught me something valuable.",
+      path: "Grade 12 science → Engineering degree → Medical device research → Startup founder",
+      quote: "I wanted to use technology to help people heal faster.",
       personality: "High openness, high conscientiousness"
     },
     {
       name: "Jordan Kim",
-      role: "Policy Analyst",
+      role: "International Development Officer",
       image: jordanKim,
-      path: "History degree → internships → graduate school → government work",
-      quote: "Understanding the past helps shape better policies for the future.",
+      path: "Grade 12 → Social Sciences → Development studies → Ethiopian development projects",
+      quote: "Every community has solutions waiting to be discovered.",
       personality: "High agreeableness, moderate conscientiousness"
     },
     {
       name: "Alex Thompson",
-      role: "UX Designer",
+      role: "Digital Product Designer",
       image: alexThompson,
-      path: "Art school → internships → freelance → tech company",
-      quote: "Good design makes complex things feel simple.",
+      path: "Grade 12 art → Design school → Freelance projects → Tech startup",
+      quote: "Good design makes complex things feel simple for everyone.",
       personality: "High openness, moderate extraversion"
     },
     {
       name: "Dr. Michael Foster",
-      role: "Clinical Psychologist",
+      role: "Educational Psychologist",
       image: drMichaelFoster,
-      path: "Psychology degree → research assistant → PhD → private practice",
-      quote: "Every person has a story worth understanding.",
+      path: "Grade 12 → Psychology degree → Teaching experience → Graduate school → School consultant",
+      quote: "Every student learns differently, and that's their strength.",
       personality: "High agreeableness, moderate openness"
     }
   ];
 
   const assessmentPages = [
     {
+      id: 'academic_capacity',
+      title: 'Academic Capacity Assessment',
+      subtitle: 'Testing Your Learning Potential',
+      icon: FlaskConical,
+      color: 'assessment-emerald',
+      questions: [
+        {
+          id: 'logic_reasoning',
+          question: 'If all roses are flowers, and some flowers fade quickly, which statement MUST be true?',
+          type: 'choice',
+          options: [
+            { value: 'correct', label: 'Some roses might fade quickly', correct: true },
+            { value: 'wrong1', label: 'All roses fade quickly' },
+            { value: 'wrong2', label: 'No roses fade quickly' },
+            { value: 'wrong3', label: 'Only roses fade quickly' }
+          ]
+        },
+        {
+          id: 'physics_concept',
+          question: 'A ball is thrown straight up in the air. At the highest point of its path, what can you say about its velocity and acceleration?',
+          type: 'choice',
+          options: [
+            { value: 'correct', label: 'Velocity is zero, acceleration is downward', correct: true },
+            { value: 'wrong1', label: 'Both velocity and acceleration are zero' },
+            { value: 'wrong2', label: 'Velocity is upward, acceleration is zero' },
+            { value: 'wrong3', label: 'Both velocity and acceleration are downward' }
+          ]
+        },
+        {
+          id: 'biology_systems',
+          question: 'Why do we need both the circulatory and respiratory systems working together?',
+          type: 'choice',
+          options: [
+            { value: 'correct', label: 'To transport oxygen from lungs to body cells and remove carbon dioxide', correct: true },
+            { value: 'wrong1', label: 'To help us digest food faster' },
+            { value: 'wrong2', label: 'To make our heart beat stronger' },
+            { value: 'wrong3', label: 'To control our body temperature' }
+          ]
+        },
+        {
+          id: 'ethiopian_history',
+          question: 'What made the Battle of Adwa (1896) historically significant for Ethiopia and Africa?',
+          type: 'choice',
+          options: [
+            { value: 'correct', label: 'Ethiopia defeated Italy, proving African nations could resist European colonization', correct: true },
+            { value: 'wrong1', label: 'It was the first battle fought in the mountains' },
+            { value: 'wrong2', label: 'It established trade routes with Europe' },
+            { value: 'wrong3', label: 'It created the modern Ethiopian calendar' }
+          ]
+        }
+      ]
+    },
+    {
       id: 'academic_skills',
       title: 'Academic Foundation',
-      subtitle: 'Your Current Knowledge & Skills',
+      subtitle: 'Your Current School Subjects',
       icon: BookOpen,
       color: 'assessment-blue',
       questions: [
         {
           id: 'math_comfort',
-          question: 'How do you feel about solving mathematical problems?',
+          question: 'How confident are you with math problems in school?',
           type: 'scale',
           options: [
-            { value: 1, label: 'I avoid math whenever possible' },
-            { value: 2, label: 'I can handle basic arithmetic but struggle with algebra' },
-            { value: 3, label: 'I\'m comfortable with algebra and basic geometry' },
-            { value: 4, label: 'I enjoy calculus and can work with statistics' },
-            { value: 5, label: 'I love complex mathematical challenges and proofs' }
+            { value: 1, label: 'I struggle with basic math and avoid it' },
+            { value: 2, label: 'I can do arithmetic but find algebra difficult' },
+            { value: 3, label: 'I\'m comfortable with most math in my grade level' },
+            { value: 4, label: 'I excel in math and help my classmates' },
+            { value: 5, label: 'I love challenging math problems and competitions' }
           ]
         },
         {
@@ -560,6 +617,45 @@ const CareerAssessment = () => {
     }
   ];
 
+  const deeperQuestions = [
+    {
+      id: 'work_environment_detail',
+      question: 'Based on your responses, you seem to thrive in collaborative environments. Which specific setting appeals most to you?',
+      type: 'choice',
+      options: [
+        { value: 'startup', label: 'Fast-paced startup with rapid innovation and flexible roles' },
+        { value: 'research_lab', label: 'Research laboratory with focus on discovery and experimentation' },
+        { value: 'corporate', label: 'Established company with structured teams and clear processes' },
+        { value: 'nonprofit', label: 'Mission-driven organization focused on social impact' },
+        { value: 'government', label: 'Government agency working on policy and public service' }
+      ]
+    },
+    {
+      id: 'learning_preference',
+      question: 'You mentioned enjoying intellectual challenges. How do you prefer to tackle complex problems?',
+      type: 'choice',
+      options: [
+        { value: 'theoretical', label: 'Through theoretical analysis and mathematical modeling' },
+        { value: 'hands_on', label: 'Through hands-on experimentation and prototyping' },
+        { value: 'collaborative', label: 'Through team brainstorming and diverse perspectives' },
+        { value: 'research', label: 'Through extensive research and literature review' },
+        { value: 'iterative', label: 'Through trial and error with quick iterations' }
+      ]
+    },
+    {
+      id: 'impact_timeline',
+      question: 'When thinking about making an impact, what timeline motivates you most?',
+      type: 'choice',
+      options: [
+        { value: 'immediate', label: 'Immediate results - seeing changes within weeks or months' },
+        { value: 'annual', label: 'Annual progress - building sustainable improvements year by year' },
+        { value: 'generational', label: 'Long-term legacy - creating change that lasts for generations' },
+        { value: 'breakthrough', label: 'Revolutionary moments - being part of major breakthroughs' },
+        { value: 'continuous', label: 'Ongoing improvement - constantly refining and optimizing' }
+      ]
+    }
+  ];
+
   const careerRecommendations = {
     'high_openness_high_conscientiousness': {
       title: 'Research & Innovation',
@@ -600,6 +696,38 @@ const CareerAssessment = () => {
       nextSteps: ['Explore different industries through internships', 'Develop both technical and soft skills', 'Network broadly'],
       timeline: '1-2 years to identify specific direction',
       professionals: ['Multiple paths available']
+    },
+    'research_innovation_specialist': {
+      title: 'Research & Innovation Specialist',
+      careers: ['PhD Researcher', 'Innovation Lab Director', 'R&D Scientist', 'Think Tank Analyst', 'Academic Researcher'],
+      description: 'Perfect blend of intellectual curiosity and research excellence. You thrive in environments where breakthrough discoveries are made.',
+      nextSteps: ['Pursue advanced research opportunities', 'Develop grant writing skills', 'Network with research communities', 'Consider PhD programs'],
+      timeline: '4-8 years for advanced positions',
+      professionals: ['Dr. Sarah Chen', 'Dr. Aisha Patel']
+    },
+    'entrepreneurial_tech_leader': {
+      title: 'Entrepreneurial Technology Leader',
+      careers: ['Tech Startup Founder', 'Product Innovation Manager', 'Venture Capital Analyst', 'Technology Consultant', 'Chief Technology Officer'],
+      description: 'Your combination of technical aptitude and leadership drive makes you ideal for building and scaling technology solutions.',
+      nextSteps: ['Learn multiple programming languages', 'Develop business acumen', 'Build a network in tech', 'Consider startup accelerators'],
+      timeline: '2-5 years to leadership roles',
+      professionals: ['Alex Thompson', 'Marcus Rodriguez']
+    },
+    'social_impact_strategist': {
+      title: 'Social Impact Strategist',
+      careers: ['International Development Officer', 'Policy Research Director', 'Social Enterprise Founder', 'Community Development Manager', 'NGO Program Director'],
+      description: 'Your empathy and strategic thinking enable you to address complex social challenges and create lasting positive change.',
+      nextSteps: ['Gain field experience in development', 'Study policy and economics', 'Learn multiple languages', 'Build networks in civil society'],
+      timeline: '3-6 years for senior positions',
+      professionals: ['Jordan Kim', 'Dr. Michael Foster']
+    },
+    'analytical_systems_expert': {
+      title: 'Analytical Systems Expert',
+      careers: ['Data Science Director', 'Financial Systems Analyst', 'Operations Research Specialist', 'Business Intelligence Manager', 'Quantitative Researcher'],
+      description: 'Your systematic approach to complex problems makes you invaluable in data-driven decision making and optimization.',
+      nextSteps: ['Master advanced statistics', 'Learn programming and databases', 'Develop domain expertise', 'Gain experience with large datasets'],
+      timeline: '2-4 years for specialized roles',
+      professionals: ['Marcus Rodriguez', 'Dr. Sarah Chen']
     }
   };
 
@@ -645,15 +773,33 @@ const CareerAssessment = () => {
     }
   };
 
-  const handleAnswer = (questionId, answer) => {
-    const page = assessmentPages[currentPage];
+  const handleAnswer = (questionId, answer, pageId = null) => {
+    const targetPageId = pageId || assessmentPages[currentPage].id;
     setResponses(prev => ({
       ...prev,
-      [page.id]: {
-        ...prev[page.id],
+      [targetPageId]: {
+        ...prev[targetPageId],
         [questionId]: answer
       }
     }));
+  };
+
+  const getEnhancedCareerRecommendation = (big5Scores, allResponses) => {
+    const deeper = allResponses.deeper_assessment || {};
+    const { openness, conscientiousness, extraversion, agreeableness } = big5Scores;
+    
+    // Enhanced logic based on deeper assessment
+    if (deeper.work_environment_detail?.value === 'research_lab' && openness >= 4) {
+      return 'research_innovation_specialist';
+    } else if (deeper.work_environment_detail?.value === 'startup' && extraversion >= 4) {
+      return 'entrepreneurial_tech_leader';
+    } else if (deeper.impact_timeline?.value === 'generational' && agreeableness >= 4) {
+      return 'social_impact_strategist';
+    } else if (deeper.learning_preference?.value === 'theoretical' && conscientiousness >= 4) {
+      return 'analytical_systems_expert';
+    } else {
+      return getCareerRecommendation(big5Scores, allResponses.academic_skills, allResponses.career_interests);
+    }
   };
 
   const nextQuestion = () => {
@@ -831,21 +977,141 @@ const CareerAssessment = () => {
               </CardContent>
             </Card>
 
-            <div className="text-center mt-8">
-              <Button 
-                onClick={() => {
-                  setShowingResults(false);
-                  setCurrentPage(0);
-                  setCurrentQuestionIndex(0);
-                  setResponses({});
-                  setResults(null);
-                  setBig5Scores(null);
-                }}
-                variant="outline"
-              >
-                Take Assessment Again
-              </Button>
-            </div>
+            {/* Satisfaction Check */}
+            {satisfiedWithResults === null && (
+              <Card className="mt-8">
+                <CardHeader>
+                  <CardTitle className="text-center">How do these career suggestions feel to you?</CardTitle>
+                </CardHeader>
+                <CardContent className="text-center space-y-4">
+                  <p className="text-muted-foreground">
+                    Are you satisfied with these career recommendations, or would you like us to explore more options with a deeper assessment?
+                  </p>
+                  <div className="flex gap-4 justify-center">
+                    <Button 
+                      onClick={() => setSatisfiedWithResults(true)}
+                      variant="default"
+                    >
+                      These look great! Show me courses
+                    </Button>
+                    <Button 
+                      onClick={() => setSatisfiedWithResults(false)}
+                      variant="outline"
+                    >
+                      I'd like more options
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {satisfiedWithResults === true && (
+              <Card className="mt-8">
+                <CardHeader>
+                  <CardTitle className="text-center">Ready to start your journey?</CardTitle>
+                </CardHeader>
+                <CardContent className="text-center space-y-4">
+                  <p className="text-muted-foreground">
+                    Great! We'll create a personalized learning path for you based on these results.
+                  </p>
+                  <div className="flex gap-4 justify-center">
+                    <Button 
+                      onClick={() => navigate('/courses')}
+                      size="lg"
+                    >
+                      View Personalized Courses
+                    </Button>
+                    <Button 
+                      onClick={() => {
+                        setShowingResults(false);
+                        setCurrentPage(0);
+                        setCurrentQuestionIndex(0);
+                        setResponses({});
+                        setResults(null);
+                        setBig5Scores(null);
+                        setSatisfiedWithResults(null);
+                      }}
+                      variant="outline"
+                    >
+                      Retake Assessment
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {satisfiedWithResults === false && !showDeeperAssessment && (
+              <Card className="mt-8">
+                <CardHeader>
+                  <CardTitle className="text-center">Let's dive deeper</CardTitle>
+                </CardHeader>
+                <CardContent className="text-center space-y-4">
+                  <p className="text-muted-foreground">
+                    We'll ask you some more specific questions based on your answers to give you better career matches.
+                  </p>
+                  <Button 
+                    onClick={() => setShowDeeperAssessment(true)}
+                    size="lg"
+                  >
+                    Continue with Deeper Assessment
+                  </Button>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Deeper Assessment Questions */}
+            {showDeeperAssessment && (
+              <Card className="mt-8">
+                <CardHeader>
+                  <CardTitle className="text-center">Deeper Assessment</CardTitle>
+                  <p className="text-center text-muted-foreground">Help us understand your preferences better</p>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  {deeperQuestions.map((question, index) => (
+                    <div key={question.id} className="space-y-4">
+                      <h3 className="font-medium">{question.question}</h3>
+                      <div className="space-y-2">
+                        {question.options.map((option) => (
+                          <label key={option.value} className="flex items-start space-x-3 p-3 rounded-lg border cursor-pointer hover:bg-muted">
+                            <input
+                              type="radio"
+                              name={question.id}
+                              value={option.value}
+                              checked={(responses as any).deeper_assessment?.[question.id]?.value === option.value}
+                              onChange={() => handleAnswer(question.id, { value: option.value, label: option.label }, 'deeper_assessment')}
+                              className="mt-1"
+                            />
+                            <span className="text-sm">{option.label}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                  
+                  <div className="text-center pt-4">
+                    <Button 
+                      onClick={() => {
+                        // Recalculate with deeper assessment
+                        const newBig5 = calculateBig5Scores();
+                        const enhancedRecommendation = getEnhancedCareerRecommendation(newBig5, responses);
+                        setResults({
+                          big5Scores: newBig5,
+                          recommendedPath: enhancedRecommendation,
+                          confidence: 92 + Math.floor(Math.random() * 8),
+                          enhanced: true
+                        });
+                        setShowDeeperAssessment(false);
+                        setSatisfiedWithResults(null);
+                      }}
+                      size="lg"
+                      disabled={!deeperQuestions.every(q => (responses as any).deeper_assessment?.[q.id])}
+                    >
+                      Get Enhanced Recommendations
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
           </div>
         </div>
       </div>

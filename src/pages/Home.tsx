@@ -16,22 +16,22 @@ const Home = () => {
       <section className="container mx-auto px-4 py-16 text-center">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-5xl font-bold text-foreground mb-6">
-            Discover Your Perfect Career Path
+            Your Future Starts Here
           </h1>
           <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-            Unlike overwhelming platforms that dump everything at once, we create a streamlined, 
-            personalized journey based on your unique skills, personality, and aspirations.
+            Designed for Ethiopian students. No more confusion about what to study. 
+            Get a clear path from where you are to your dream career, with personalized courses just for you.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
             <Link to="/assessment">
               <Button size="lg" className="text-lg px-8 py-6">
-                Start Your Assessment
+                Find My Perfect Career
                 <ChevronRight className="ml-2 w-5 h-5" />
               </Button>
             </Link>
             <p className="text-sm text-muted-foreground">
-              Takes 10-15 minutes • Science-backed results
+              Free assessment • Takes 10-15 minutes • Get instant results
             </p>
           </div>
 
@@ -42,11 +42,11 @@ const Home = () => {
                 <div className="inline-flex items-center justify-center w-12 h-12 bg-assessment-blue rounded-full mb-4">
                   <Target className="w-6 h-6 text-white" />
                 </div>
-                <CardTitle>Focused Path</CardTitle>
+                <CardTitle>Clear Direction</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  No information overload. Get exactly what you need for your next steps.
+                  No confusion. Get exactly the courses and steps you need for YOUR goals.
                 </p>
               </CardContent>
             </Card>
@@ -56,11 +56,11 @@ const Home = () => {
                 <div className="inline-flex items-center justify-center w-12 h-12 bg-personality-openness rounded-full mb-4">
                   <Brain className="w-6 h-6 text-white" />
                 </div>
-                <CardTitle>Science-Based</CardTitle>
+                <CardTitle>Smart Assessment</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Built on Big Five personality research and real career data.
+                  Tests your academic abilities, personality, and interests to find perfect matches.
                 </p>
               </CardContent>
             </Card>
@@ -70,11 +70,11 @@ const Home = () => {
                 <div className="inline-flex items-center justify-center w-12 h-12 bg-assessment-green rounded-full mb-4">
                   <Users className="w-6 h-6 text-white" />
                 </div>
-                <CardTitle>Real Stories</CardTitle>
+                <CardTitle>Ethiopian Focus</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Learn from professionals who've walked your path before.
+                  Includes Ethiopian history, local context, and global career opportunities.
                 </p>
               </CardContent>
             </Card>
@@ -87,10 +87,10 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl font-bold text-foreground mb-6">
-              How Our Assessment Works
+              How We Help You Choose
             </h2>
             <p className="text-lg text-muted-foreground mb-12">
-              Three key areas that shape your ideal career path
+              Three key areas we assess to find your perfect career match
             </p>
 
             <div className="grid md:grid-cols-3 gap-8">
@@ -98,9 +98,9 @@ const Home = () => {
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-assessment-blue rounded-full">
                   <BookOpen className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold">Where You Are</h3>
+                <h3 className="text-xl font-semibold">Your Academic Strengths</h3>
                 <p className="text-muted-foreground">
-                  Current academic skills, technical abilities, and learning preferences
+                  Logic, math, science, and Ethiopian history questions to assess your natural abilities
                 </p>
               </div>
 
@@ -108,9 +108,9 @@ const Home = () => {
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-personality-openness rounded-full">
                   <Lightbulb className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold">Who You Are</h3>
+                <h3 className="text-xl font-semibold">Your Personality Type</h3>
                 <p className="text-muted-foreground">
-                  Personality traits, work style, and natural strengths using Big Five framework
+                  How you work best, relate to others, and handle challenges - the science of YOU
                 </p>
               </div>
 
@@ -118,9 +118,9 @@ const Home = () => {
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-assessment-teal rounded-full">
                   <Target className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold">What You Want</h3>
+                <h3 className="text-xl font-semibold">Your Dreams & Values</h3>
                 <p className="text-muted-foreground">
-                  Career values, desired impact, and long-term goals
+                  What kind of impact you want to make and what matters most to you in life
                 </p>
               </div>
             </div>
@@ -134,10 +134,10 @@ const Home = () => {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-foreground mb-6">
-                Meet Inspiring Professionals
+                Students Like You Who Made It
               </h2>
               <p className="text-lg text-muted-foreground">
-                Real career stories from people who've found their path
+                Real stories from people who found their passion and built amazing careers
               </p>
             </div>
 
@@ -205,15 +205,15 @@ const Home = () => {
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl font-bold text-foreground mb-6">
-              Ready to Find Your Path?
+              Stop Feeling Lost About Your Future
             </h2>
             <p className="text-lg text-muted-foreground mb-8">
-              Join thousands of students who've discovered their ideal career direction
+              Join Ethiopian students who've found clarity and confidence in their career choices
             </p>
             
             <Link to="/assessment">
               <Button size="lg" className="text-lg px-8 py-6">
-                Take the Assessment
+                Discover My Career Path
                 <ChevronRight className="ml-2 w-5 h-5" />
               </Button>
             </Link>
