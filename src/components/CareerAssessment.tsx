@@ -14,6 +14,10 @@ import jordanKim from '@/assets/jordan-kim.jpg';
 import alexThompson from '@/assets/alex-thompson.jpg';
 import drMichaelFoster from '@/assets/dr-michael-foster.jpg';
 
+// You must define or import assessmentPages before using it.
+// Example placeholder definition (replace with your actual assessmentPages data):
+import assessmentPages from '@/pages/Assessment'; // <-- Make sure Assessment exports assessmentPages as default
+
 const CareerAssessment = () => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(0);
@@ -76,546 +80,8 @@ const CareerAssessment = () => {
     }
   ];
 
-  const assessmentPages = [
-    {
-      id: 'academic_capacity',
-      title: 'Academic Capacity Assessment',
-      subtitle: 'Testing Your Learning Potential',
-      icon: FlaskConical,
-      color: 'assessment-emerald',
-      questions: [
-        {
-          id: 'logic_reasoning',
-          question: 'If all roses are flowers, and some flowers fade quickly, which statement MUST be true?',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Some roses might fade quickly', correct: true },
-            { value: 'wrong1', label: 'All roses fade quickly' },
-            { value: 'wrong2', label: 'No roses fade quickly' },
-            { value: 'wrong3', label: 'Only roses fade quickly' }
-          ]
-        },
-        {
-          id: 'physics_concept',
-          question: 'A ball is thrown straight up in the air. At the highest point of its path, what can you say about its velocity and acceleration?',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Velocity is zero, acceleration is downward', correct: true },
-            { value: 'wrong1', label: 'Both velocity and acceleration are zero' },
-            { value: 'wrong2', label: 'Velocity is upward, acceleration is zero' },
-            { value: 'wrong3', label: 'Both velocity and acceleration are downward' }
-          ]
-        },
-        {
-          id: 'biology_systems',
-          question: 'Why do we need both the circulatory and respiratory systems working together?',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'To transport oxygen from lungs to body cells and remove carbon dioxide', correct: true },
-            { value: 'wrong1', label: 'To help us digest food faster' },
-            { value: 'wrong2', label: 'To make our heart beat stronger' },
-            { value: 'wrong3', label: 'To control our body temperature' }
-          ]
-        },
-        {
-          id: 'ethiopian_history',
-          question: 'What made the Battle of Adwa (1896) historically significant for Ethiopia and Africa?',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Ethiopia defeated Italy, proving African nations could resist European colonization', correct: true },
-            { value: 'wrong1', label: 'It was the first battle fought in the mountains' },
-            { value: 'wrong2', label: 'It established trade routes with Europe' },
-            { value: 'wrong3', label: 'It created the modern Ethiopian calendar' }
-          ]
-        }
-      ]
-    },
-    {
-      id: 'academic_skills',
-      title: 'Academic Foundation',
-      subtitle: 'Your Current School Subjects',
-      icon: BookOpen,
-      color: 'assessment-blue',
-      questions: [
-        {
-          id: 'math_comfort',
-          question: 'How confident are you with math problems in school?',
-          type: 'scale',
-          options: [
-            { value: 1, label: 'I struggle with basic math and avoid it' },
-            { value: 2, label: 'I can do arithmetic but find algebra difficult' },
-            { value: 3, label: 'I\'m comfortable with most math in my grade level' },
-            { value: 4, label: 'I excel in math and help my classmates' },
-            { value: 5, label: 'I love challenging math problems and competitions' }
-          ]
-        },
-        {
-          id: 'science_reasoning',
-          question: 'When approaching a scientific problem, you typically:',
-          type: 'choice',
-          options: [
-            { value: 'hypothesis', label: 'Form a clear hypothesis first, then test it systematically' },
-            { value: 'explore', label: 'Explore different angles until patterns emerge' },
-            { value: 'research', label: 'Research what others have discovered first' },
-            { value: 'experiment', label: 'Jump into experimenting right away' },
-            { value: 'discuss', label: 'Discuss with others to refine my approach' }
-          ]
-        },
-        {
-          id: 'writing_ability',
-          question: 'How confident are you in your writing abilities?',
-          type: 'scale',
-          options: [
-            { value: 1, label: 'I struggle to express my ideas clearly in writing' },
-            { value: 2, label: 'I can write adequately for school assignments' },
-            { value: 3, label: 'I write clearly and can explain complex ideas' },
-            { value: 4, label: 'I enjoy writing and often write more than required' },
-            { value: 5, label: 'I\'m an excellent writer who helps others improve their writing' }
-          ]
-        },
-        {
-          id: 'research_skills',
-          question: 'When researching a topic, you:',
-          type: 'choice',
-          options: [
-            { value: 'systematic', label: 'Create a systematic plan and follow reliable sources' },
-            { value: 'broad', label: 'Cast a wide net and synthesize information from many sources' },
-            { value: 'deep', label: 'Dive deep into a few authoritative sources' },
-            { value: 'collaborative', label: 'Prefer to research as part of a team' },
-            { value: 'minimal', label: 'Do the minimum required research' }
-          ]
-        },
-        {
-          id: 'technical_skills',
-          question: 'Your experience with technology and programming:',
-          type: 'choice',
-          options: [
-            { value: 'advanced', label: 'I can program in multiple languages and understand algorithms' },
-            { value: 'intermediate', label: 'I can code basic programs and understand logical structures' },
-            { value: 'beginner', label: 'I\'ve tried coding but find it challenging' },
-            { value: 'interested', label: 'I haven\'t coded but am interested in learning' },
-            { value: 'prefer_other', label: 'I prefer non-technical approaches to problem-solving' }
-          ]
-        }
-      ]
-    },
-    {
-      id: 'openness',
-      title: 'Intellectual Curiosity',
-      subtitle: 'Big 5: Openness to Experience',
-      icon: Lightbulb,
-      color: 'personality-openness',
-      questions: [
-        {
-          id: 'new_ideas',
-          question: 'I am always curious about how things work.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'abstract_thinking',
-          question: 'I enjoy thinking about abstract concepts and theories.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'creativity',
-          question: 'I often come up with creative solutions to problems.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'learning_appetite',
-          question: 'I actively seek out new learning experiences.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'artistic_appreciation',
-          question: 'I have a strong appreciation for art, music, or literature.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        }
-      ]
-    },
-    {
-      id: 'conscientiousness',
-      title: 'Work Style & Organization',
-      subtitle: 'Big 5: Conscientiousness',
-      icon: Award,
-      color: 'personality-conscientiousness',
-      questions: [
-        {
-          id: 'organization',
-          question: 'I keep my workspace and materials well-organized.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'persistence',
-          question: 'I finish projects even when they become difficult or boring.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'planning',
-          question: 'I prefer to plan my work in advance rather than improvise.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'deadlines',
-          question: 'I always meet deadlines and rarely procrastinate.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'attention_detail',
-          question: 'I pay careful attention to details in my work.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        }
-      ]
-    },
-    {
-      id: 'extraversion',
-      title: 'Social Energy & Leadership',
-      subtitle: 'Big 5: Extraversion',
-      icon: Users,
-      color: 'personality-extraversion',
-      questions: [
-        {
-          id: 'social_energy',
-          question: 'I feel energized after spending time with groups of people.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'leadership',
-          question: 'I naturally take charge in group situations.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'public_speaking',
-          question: 'I enjoy presenting my ideas to large groups.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'networking',
-          question: 'I easily start conversations with strangers.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'assertiveness',
-          question: 'I assertively express my opinions and ideas.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        }
-      ]
-    },
-    {
-      id: 'agreeableness',
-      title: 'Collaboration & Empathy',
-      subtitle: 'Big 5: Agreeableness',
-      icon: Heart,
-      color: 'personality-agreeableness',
-      questions: [
-        {
-          id: 'cooperation',
-          question: 'I prefer collaborative work over competition.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'empathy',
-          question: 'I can easily sense when others are upset or stressed.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'helping',
-          question: 'I go out of my way to help others, even when it\'s inconvenient.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'conflict_resolution',
-          question: 'I work hard to resolve conflicts and find win-win solutions.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'trust',
-          question: 'I generally trust that people have good intentions.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        }
-      ]
-    },
-    {
-      id: 'neuroticism',
-      title: 'Emotional Resilience',
-      subtitle: 'Big 5: Emotional Stability',
-      icon: Brain,
-      color: 'personality-emotional',
-      questions: [
-        {
-          id: 'stress_management',
-          question: 'I remain calm under pressure and tight deadlines.',
-          type: 'likert',
-          options: [
-            { value: 5, label: 'Strongly Agree' },
-            { value: 4, label: 'Agree' },
-            { value: 3, label: 'Neutral' },
-            { value: 2, label: 'Disagree' },
-            { value: 1, label: 'Strongly Disagree' }
-          ]
-        },
-        {
-          id: 'emotional_stability',
-          question: 'My mood stays relatively stable throughout the day.',
-          type: 'likert',
-          options: [
-            { value: 5, label: 'Strongly Agree' },
-            { value: 4, label: 'Agree' },
-            { value: 3, label: 'Neutral' },
-            { value: 2, label: 'Disagree' },
-            { value: 1, label: 'Strongly Disagree' }
-          ]
-        },
-        {
-          id: 'confidence',
-          question: 'I feel confident in my abilities to handle challenges.',
-          type: 'likert',
-          options: [
-            { value: 5, label: 'Strongly Agree' },
-            { value: 4, label: 'Agree' },
-            { value: 3, label: 'Neutral' },
-            { value: 2, label: 'Disagree' },
-            { value: 1, label: 'Strongly Disagree' }
-          ]
-        },
-        {
-          id: 'adaptability',
-          question: 'I adapt quickly when plans change unexpectedly.',
-          type: 'likert',
-          options: [
-            { value: 5, label: 'Strongly Agree' },
-            { value: 4, label: 'Agree' },
-            { value: 3, label: 'Neutral' },
-            { value: 2, label: 'Disagree' },
-            { value: 1, label: 'Strongly Disagree' }
-          ]
-        },
-        {
-          id: 'optimism',
-          question: 'I generally expect positive outcomes from situations.',
-          type: 'likert',
-          options: [
-            { value: 5, label: 'Strongly Agree' },
-            { value: 4, label: 'Agree' },
-            { value: 3, label: 'Neutral' },
-            { value: 2, label: 'Disagree' },
-            { value: 1, label: 'Strongly Disagree' }
-          ]
-        }
-      ]
-    },
-    {
-      id: 'career_interests',
-      title: 'Career Values & Goals',
-      subtitle: 'What Motivates You',
-      icon: Target,
-      color: 'assessment-teal',
-      questions: [
-        {
-          id: 'work_values',
-          question: 'What matters most to you in a career? (Choose your top priority)',
-          type: 'choice',
-          options: [
-            { value: 'intellectual_challenge', label: 'Intellectual stimulation and complex problems' },
-            { value: 'helping_others', label: 'Making a positive impact on people\'s lives' },
-            { value: 'creativity', label: 'Creative expression and innovation' },
-            { value: 'financial_success', label: 'Financial security and high earning potential' },
-            { value: 'autonomy', label: 'Independence and flexible work arrangements' },
-            { value: 'recognition', label: 'Recognition and professional prestige' }
-          ]
-        },
-        {
-          id: 'impact_scale',
-          question: 'What scale of impact do you want to have?',
-          type: 'choice',
-          options: [
-            { value: 'individual', label: 'One-on-one: Directly helping individual people' },
-            { value: 'local', label: 'Community: Improving your local area' },
-            { value: 'organizational', label: 'Institutional: Changing how organizations work' },
-            { value: 'societal', label: 'Societal: Addressing broad social issues' },
-            { value: 'global', label: 'Global: Solving problems that affect humanity' }
-          ]
-        },
-        {
-          id: 'work_environment',
-          question: 'Where do you see yourself thriving?',
-          type: 'choice',
-          options: [
-            { value: 'lab', label: 'Research laboratory or clinical setting' },
-            { value: 'office', label: 'Corporate office with team collaboration' },
-            { value: 'field', label: 'Field work and data collection' },
-            { value: 'remote', label: 'Remote work with digital collaboration' },
-            { value: 'varied', label: 'Constantly changing locations and contexts' },
-            { value: 'entrepreneurial', label: 'Startup or entrepreneurial environment' }
-          ]
-        },
-        {
-          id: 'career_timeline',
-          question: 'How do you prefer to advance in your career?',
-          type: 'choice',
-          options: [
-            { value: 'fast_track', label: 'Quick advancement with high responsibility early on' },
-            { value: 'steady_climb', label: 'Steady, predictable progression over time' },
-            { value: 'expertise', label: 'Becoming a deep expert in a specific area' },
-            { value: 'diverse', label: 'Exploring different roles and industries' },
-            { value: 'entrepreneurial', label: 'Building something new or starting my own venture' }
-          ]
-        },
-        {
-          id: 'work_life_balance',
-          question: 'How important is work-life balance to you?',
-          type: 'choice',
-          options: [
-            { value: 'essential', label: 'Essential - I need clear boundaries between work and personal life' },
-            { value: 'important', label: 'Important - I want flexibility but can work harder when needed' },
-            { value: 'moderate', label: 'Moderate - I\'m willing to work long hours for meaningful work' },
-            { value: 'flexible', label: 'Flexible - I can adapt to what the job requires' },
-            { value: 'career_focused', label: 'Career-focused - I\'m willing to prioritize career growth' }
-          ]
-        }
-      ]
-    }
-  ];
+// (Removed duplicate definition of calculateAcademicStats)
+
 
   const deeperQuestions = [
     {
@@ -730,12 +196,68 @@ const CareerAssessment = () => {
       professionals: ['Marcus Rodriguez', 'Dr. Sarah Chen']
     }
   };
+// ADD these new functions after the careerRecommendations object:
 
-  const calculateBig5Scores = () => {
-    const scores = {
-      openness: 0,
-      conscientiousness: 0,
-      extraversion: 0,
+const calculateAcademicStats = () => {
+  const academicPages = ['mathematics', 'general_science', 'social_studies', 'physics', 'chemistry', 'biology', 'information_technology', 'performing_visual_arts', 'career_technical_education'];
+  const stats = {};
+  let totalCorrect = 0;
+  let totalQuestions = 0;
+
+  academicPages.forEach(pageId => {
+    const pageResponses = responses[pageId] || {};
+    const pageQuestions = assessmentPages.find(p => p.id === pageId)?.questions || [];
+    let correct = 0;
+    
+    pageQuestions.forEach(question => {
+      const response = pageResponses[question.id];
+      if (response && response.correct) {
+        correct++;
+        totalCorrect++;
+      }
+      totalQuestions++;
+    });
+    
+    stats[pageId] = {
+      correct,
+      total: pageQuestions.length,
+      percentage: Math.round((correct / pageQuestions.length) * 100)
+    };
+  });
+
+  return {
+    subjects: stats,
+    overall: {
+      correct: totalCorrect,
+      total: totalQuestions,
+      percentage: Math.round((totalCorrect / totalQuestions) * 100)
+    }
+  };
+};
+
+const calculatePersonalityStats = () => {
+  const personalityPages = ['openness', 'conscientiousness', 'extraversion', 'agreeableness', 'neuroticism'];
+  const stats = {};
+
+  personalityPages.forEach(pageId => {
+    const pageResponses = responses[pageId] || {};
+    const values = Object.values(pageResponses).map(r => r.value || 0);
+    const average = values.length > 0 ? values.reduce((sum, val) => sum + val, 0) / values.length : 0;
+    
+    stats[pageId] = {
+      score: average,
+      level: average >= 4 ? 'High' : average >= 3 ? 'Moderate' : 'Lower'
+    };
+  });
+
+  return stats;
+};
+
+const calculateBig5Scores = () => {
+  const scores = {
+    openness: 0,
+    conscientiousness: 0,
+    extraversion: 0,
       agreeableness: 0,
       emotional_stability: 0
     };
@@ -1117,7 +639,118 @@ const CareerAssessment = () => {
       </div>
     );
   }
+// ADD this right before the existing question rendering logic:
 
+// Handle summary slides
+if (currentPageObj.type === 'summary') {
+  const Icon = currentPageObj.icon;
+  const academicStats = currentPageObj.id === 'academic_summary' ? calculateAcademicStats() : null;
+  const personalityStats = currentPageObj.id === 'personality_summary' ? calculatePersonalityStats() : null;
+  
+  return (
+    <div className="min-h-screen bg-gradient-primary">
+      <div className="container mx-auto px-4 py-8">
+        {/* Progress bar */}
+        <div className="max-w-2xl mx-auto mb-8">
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-sm text-muted-foreground">
+              Section Complete
+            </span>
+            <span className="text-sm text-muted-foreground">
+              {Math.round((getCurrentQuestionNumber() / getTotalQuestions()) * 100)}% complete
+            </span>
+          </div>
+          <Progress value={(getCurrentQuestionNumber() / getTotalQuestions()) * 100} className="h-2" />
+        </div>
+
+        {/* Summary Card */}
+        <Card className="max-w-4xl mx-auto">
+          <CardHeader className="text-center">
+            <div className={`inline-flex items-center justify-center w-20 h-20 bg-${currentPageObj.color} rounded-full mb-6`}>
+              <Icon className="w-10 h-10 text-white" />
+            </div>
+            <CardTitle className="text-3xl">{currentPageObj.content.title}</CardTitle>
+            <p className="text-muted-foreground text-lg">{currentPageObj.content.description}</p>
+          </CardHeader>
+          
+          <CardContent className="space-y-8">
+            {/* Academic Stats */}
+            {academicStats && (
+              <div>
+                <h3 className="text-xl font-semibold mb-4">Your Subject Performance</h3>
+                <div className="grid md:grid-cols-3 gap-4 mb-6">
+                  {Object.entries(academicStats.subjects).map(([subject, stats]) => (
+                    <div key={subject} className="text-center p-4 bg-muted rounded-lg">
+                      <div className="text-2xl font-bold text-assessment-blue">
+                        {stats.percentage}%
+                      </div>
+                      <div className="text-sm text-muted-foreground capitalize">
+                        {subject.replace('_', ' ')}
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        {stats.correct}/{stats.total} correct
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="text-center p-6 bg-gradient-card rounded-lg">
+                  <div className="text-3xl font-bold text-assessment-green mb-2">
+                    {academicStats.overall.percentage}%
+                  </div>
+                  <div className="text-lg font-semibold">Overall Academic Performance</div>
+                  <div className="text-muted-foreground">
+                    {academicStats.overall.correct} out of {academicStats.overall.total} questions correct
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Personality Stats */}
+            {personalityStats && (
+              <div>
+                <h3 className="text-xl font-semibold mb-4">Your Personality Traits</h3>
+                <div className="grid md:grid-cols-5 gap-4">
+                  {Object.entries(personalityStats).map(([trait, stats]) => (
+                    <div key={trait} className="text-center p-4 bg-muted rounded-lg">
+                      <div className="text-2xl font-bold text-personality-openness">
+                        {stats.level}
+                      </div>
+                      <div className="text-sm capitalize mb-1">
+                        {trait === 'neuroticism' ? 'Emotional Stability' : trait}
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        Score: {stats.score.toFixed(1)}/5
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="text-center pt-6">
+              <div className="mb-4">
+                <Badge variant="secondary" className="text-lg px-4 py-2">
+                  {currentPageObj.content.nextSection}
+                </Badge>
+              </div>
+              
+              <Button
+                onClick={nextPage}
+                size="lg"
+                className="text-lg px-8 py-6"
+              >
+                Continue Assessment
+                <ChevronRight className="w-5 h-5 ml-2" />
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}
+
+// THEN the existing question rendering logic continues here...
   // Assessment questions view
   const currentPageObj = assessmentPages[currentPage];
   const currentQuestion = currentPageObj.questions[currentQuestionIndex];
