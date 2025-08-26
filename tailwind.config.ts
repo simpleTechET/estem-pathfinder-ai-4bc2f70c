@@ -18,12 +18,33 @@ export default {
 			}
 		},
 		extend: {
+			backgroundImage: {
+				'gradient-primary': 'var(--gradient-primary)',
+				'gradient-hero': 'var(--gradient-hero)',
+				'gradient-card': 'var(--gradient-card)',
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
+				assessment: {
+					blue: 'hsl(var(--assessment-blue))',
+					purple: 'hsl(var(--assessment-purple))',
+					green: 'hsl(var(--assessment-green))',
+					orange: 'hsl(var(--assessment-orange))',
+					pink: 'hsl(var(--assessment-pink))',
+					indigo: 'hsl(var(--assessment-indigo))',
+					teal: 'hsl(var(--assessment-teal))',
+				},
+				personality: {
+					openness: 'hsl(var(--openness))',
+					conscientiousness: 'hsl(var(--conscientiousness))',
+					extraversion: 'hsl(var(--extraversion))',
+					agreeableness: 'hsl(var(--agreeableness))',
+					emotional: 'hsl(var(--emotional-stability))',
+				},
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))'

@@ -8,8 +8,29 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 0 0% 99%;
     --foreground: 222.2 84% 4.9%;
+    
+    /* Light gradient backgrounds for education platform */
+    --gradient-primary: linear-gradient(135deg, hsl(240 100% 98%), hsl(210 100% 97%), hsl(200 100% 96%));
+    --gradient-hero: linear-gradient(135deg, hsl(240 50% 96%), hsl(210 60% 97%), hsl(180 40% 98%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(220 60% 99%));
+    
+    /* Assessment colors */
+    --assessment-blue: 214 100% 60%;
+    --assessment-purple: 262 83% 65%;
+    --assessment-green: 142 76% 55%;
+    --assessment-orange: 25 95% 60%;
+    --assessment-pink: 330 81% 65%;
+    --assessment-indigo: 239 84% 67%;
+    --assessment-teal: 173 58% 50%;
+    
+    /* Professional personality colors */
+    --openness: 262 83% 65%;
+    --conscientiousness: 142 76% 55%;
+    --extraversion: 25 95% 60%;
+    --agreeableness: 330 81% 65%;
+    --emotional-stability: 239 84% 67%;
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
