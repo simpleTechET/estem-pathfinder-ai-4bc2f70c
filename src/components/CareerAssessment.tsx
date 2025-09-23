@@ -1154,7 +1154,7 @@ const CareerAssessment = () => {
       
       pageQuestions.forEach(question => {
         const response = pageResponses[question.id];
-        if (response && response.correct) {
+        if (response && response.isCorrect) {
           correct++;
           totalCorrect++;
         }
@@ -1258,11 +1258,20 @@ const CareerAssessment = () => {
 
   const handleAnswer = (questionId: string, answer: any, pageId: string | null = null) => {
     const targetPageId = pageId || assessmentPages[currentPage].id;
+    
+    // For academic questions, track if answer is correct
+    const page = assessmentPages.find(p => p.id === targetPageId);
+    const question = page?.questions.find(q => q.id === questionId);
+    const isCorrect = (question?.options.find(opt => opt.value === answer.value) as any)?.correct === true;
+    
     setResponses((prev: any) => ({
       ...prev,
       [targetPageId]: {
         ...prev[targetPageId],
-        [questionId]: answer
+        [questionId]: {
+          ...answer,
+          isCorrect: isCorrect
+        }
       }
     }));
   };
@@ -1738,26 +1747,32 @@ if (currentPageObj.type === 'summary') {
             
             <div className="space-y-3">
               {currentQuestion.options.map((option, index) => (
-                <Button
-                  key={index}
-                  variant={currentAnswer?.value === option.value ? "default" : "outline"}
-                  className="w-full text-left h-auto p-4 justify-start"
-                  onClick={() => handleAnswer(currentQuestion.id, option)}
-                >
-                  <div className="flex items-center">
-                    {currentAnswer?.value === option.value && (
-                      <CheckCircle className="w-5 h-5 mr-3 text-green-500" />
-                    )}
-                    <div>
-                      <div className="font-medium">{option.label}</div>
-                      {currentQuestion.type === 'scale' && (
-                        <div className="text-sm text-muted-foreground">
-                          Level {option.value}
-                        </div>
+                  <Button
+                    key={index}
+                    variant={currentAnswer?.value === option.value ? "default" : "outline"}
+                    className="w-full text-left h-auto p-4 justify-start"
+                    onClick={() => handleAnswer(currentQuestion.id, option)}
+                  >
+                    <div className="flex items-center">
+                      {currentAnswer?.value === option.value && (
+                        currentAnswer?.isCorrect ? (
+                          <CheckCircle className="w-5 h-5 mr-3 text-green-500" />
+                        ) : (
+                          <div className="w-5 h-5 mr-3 text-red-500 flex items-center justify-center">
+                            <span className="text-lg font-bold">✕</span>
+                          </div>
+                        )
                       )}
+                      <div>
+                        <div className="font-medium">{option.label}</div>
+                        {currentQuestion.type === 'scale' && (
+                          <div className="text-sm text-muted-foreground">
+                            Level {option.value}
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </Button>
+                  </Button>
               ))}
             </div>
             
