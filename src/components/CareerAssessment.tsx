@@ -1259,6 +1259,12 @@ const CareerAssessment = () => {
   const handleAnswer = (questionId: string, answer: any, pageId: string | null = null) => {
     const targetPageId = pageId || assessmentPages[currentPage].id;
     
+    // Check if answer already exists (prevent changing answers)
+    const existingAnswer = responses[targetPageId]?.[questionId];
+    if (existingAnswer) {
+      return; // Don't allow changing answers
+    }
+    
     // For academic questions, track if answer is correct
     const page = assessmentPages.find(p => p.id === targetPageId);
     const question = page?.questions.find(q => q.id === questionId);
