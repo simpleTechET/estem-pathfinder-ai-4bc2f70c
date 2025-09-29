@@ -5,7 +5,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-    base: '/pathfinder-ai-64/',
+    base: '/ESTEM-pathfinder-ai/',
   server: {
     host: "::",
     port: 8080,
