@@ -10,15 +10,20 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      pages: write
+      id-token: write
     
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "18"
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
@@ -35,5 +40,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           force_orphan: true
-          # These settings allow branch creation:
-          keep_files: false
+          full_commit_message: "Deploy GitHub Pages: ${{ github.sha }}"
