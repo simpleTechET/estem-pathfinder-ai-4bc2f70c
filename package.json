@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
-  "homepage": "https://lv2kode2pwr.github.io/pathfinder-ai-64/",
+  "homepage": "https://simpletechet.github.io/ESTEM-pathfinder-ai/",
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-accordion": "^1.2.11",
