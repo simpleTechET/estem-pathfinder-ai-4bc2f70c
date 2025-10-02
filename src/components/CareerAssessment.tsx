@@ -17,14 +17,67 @@ import drMichaelFoster from '@/assets/dr-michael-foster.jpg';
 
 const CareerAssessment = () => {
   const navigate = useNavigate();
-  const [currentPage, setCurrentPage] = useState(0);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [responses, setResponses] = useState({});
-  const [results, setResults] = useState(null);
-  const [showingResults, setShowingResults] = useState(false);
-  const [big5Scores, setBig5Scores] = useState(null);
-  const [showDeeperAssessment, setShowDeeperAssessment] = useState(false);
-  const [satisfiedWithResults, setSatisfiedWithResults] = useState(null);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+    const [responses, setResponses] = useState({});
+    const [results, setResults] = useState(null);
+    const [showingResults, setShowingResults] = useState(false);
+    const [big5Scores, setBig5Scores] = useState(null);
+    const [showDeeperAssessment, setShowDeeperAssessment] = useState(false);
+    const [satisfiedWithResults, setSatisfiedWithResults] = useState(null);
+
+    // Utility to shuffle an array (Fisher-Yates)
+    function shuffleArray<T>(array: T[]): T[] {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+  // Removed problematic top-of-file declaration of currentQuestion. Will declare after assessmentPages.
+  
+  // Move assessmentPages definition above its first use
+  
+  // (Removed duplicate declaration of assessmentPages here. The actual definition remains below.)
+
+  // Memoize shuffled options per question id for stable shuffling during session
+  const [shuffledMap, setShuffledMap] = useState<{ [key: string]: any[] }>({});
+
+  // Declare currentPageObj and currentQuestion before using them
+  // const currentPageObj = assessmentPages[currentPage];
+  // const pageResponses = responses[currentPageObj.id] || {};
+  // const currentQuestion = currentPageObj.questions[currentQuestionIndex];
+
+  // useEffect(() => {
+  //   const key = `${currentPage}-${currentQuestionIndex}`;
+  //   if (
+  //     currentQuestion.type === 'choice' &&
+  //     Array.isArray(currentQuestion.options) &&
+  //     typeof currentQuestion.options[0]?.value === 'string'
+  //   ) {
+  //     setShuffledMap(prev => {
+  //       if (prev[key]) return prev;
+  //       // Only shuffle if all option values are strings
+  //       return { 
+  //         ...prev, 
+  //         [key]: currentQuestion.options.every(opt => typeof opt.value === 'string') 
+  //           ? shuffleArray(currentQuestion.options as { value: string; label: string; correct?: boolean }[]) 
+  //           : currentQuestion.options 
+  //       };
+  //     });
+  //   } else {
+  //     // Only set for non-choice questions if not already set
+  //     setShuffledMap(prev => {
+  //       if (prev[key]) return prev;
+  //       return { ...prev, [key]: currentQuestion.options };
+  //     });
+  //   }
+  //   // eslint-disable-next-line
+  // }, [currentPage, currentQuestionIndex, currentQuestion]);
+
+  // const key = `${currentPage}-${currentQuestionIndex}`;
+  // const shuffledOptions = currentQuestion.type === 'choice' ? (shuffledMap[key] || []) : currentQuestion.options;
 
   const professionalsData = [
     {
@@ -88,28 +141,6 @@ const CareerAssessment = () => {
       questions: [
         {
           id: 'algebra_basic',
-          question: 'Solve for x: 3x + 7 = 22',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'x = 5', correct: true },
-            { value: 'wrong1', label: 'x = 3' },
-            { value: 'wrong2', label: 'x = 7' },
-            { value: 'wrong3', label: 'x = 15' }
-          ]
-        },
-        {
-          id: 'fractions',
-          question: 'What is 3/4 + 2/3?',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: '17/12', correct: true },
-            { value: 'wrong1', label: '5/7' },
-            { value: 'wrong2', label: '6/12' },
-            { value: 'wrong3', label: '5/12' }
-          ]
-        },
-        {
-          id: 'percentage',
           question: 'If 60% of students in a class of 40 are girls, how many boys are in the class?',
           type: 'choice',
           options: [
@@ -1025,8 +1056,41 @@ const CareerAssessment = () => {
       ]
     }
   ];
+  const currentPageObj = assessmentPages[currentPage];
+const pageResponses = responses[currentPageObj.id] || {};
+  const currentQuestion = currentPageObj.questions[currentQuestionIndex];
+  useEffect(() => {
+    const key = `${currentPage}-${currentQuestionIndex}`;
+    if (
+      currentQuestion.type === 'choice' &&
+      Array.isArray(currentQuestion.options) &&
+      typeof currentQuestion.options[0]?.value === 'string'
+    ) {
+      setShuffledMap(prev => {
+        if (prev[key]) return prev;
+        // Only shuffle if all option values are strings
+        return { 
+          ...prev, 
+          [key]: currentQuestion.options.every(opt => typeof opt.value === 'string') 
+            ? shuffleArray(currentQuestion.options as { value: string; label: string; correct?: boolean }[]) 
+            : currentQuestion.options 
+        };
+      });
+    } else {
+      // Only set for non-choice questions if not already set
+      setShuffledMap(prev => {
+        if (prev[key]) return prev;
+        return { ...prev, [key]: currentQuestion.options };
+      });
+    }
+    // eslint-disable-next-line
+  }, [currentPage, currentQuestionIndex, currentQuestion]);
 
-  const deeperQuestions = [
+  const key = `${currentPage}-${currentQuestionIndex}`;
+  const shuffledOptions = currentQuestion.type === 'choice' ? (shuffledMap[key] || []) : currentQuestion.options;
+// end
+
+    const deeperQuestions = [
     {
       id: 'work_environment_detail',
       question: 'Based on your responses, you seem to thrive in collaborative environments. Which specific setting appeals most to you?',
@@ -1065,7 +1129,7 @@ const CareerAssessment = () => {
     }
   ];
 
-  const careerRecommendations = {
+    const careerRecommendations = {
     'high_openness_high_conscientiousness': {
       title: 'Research & Innovation',
       careers: ['Research Scientist', 'R&D Engineer', 'Data Scientist', 'Academic Researcher', 'Innovation Manager'],
@@ -1281,10 +1345,10 @@ const CareerAssessment = () => {
       }
     }));
   };
-  const currentPageObj = assessmentPages[currentPage];
-
+  // Use the single declaration of currentPageObj and currentQuestion above
+  const currentAnswer = pageResponses[currentQuestion.id];
+  const Icon = currentPageObj.icon;
   const nextQuestion = () => {
-    const currentPageObj = assessmentPages[currentPage];
     if (currentQuestionIndex < currentPageObj.questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
@@ -1607,10 +1671,9 @@ const CareerAssessment = () => {
 
 // Handle summary slides
 if (currentPageObj.type === 'summary') {
-  const Icon = currentPageObj.icon;
   const academicStats = currentPageObj.id === 'academic_summary' ? calculateAcademicStats() : null;
   const personalityStats = currentPageObj.id === 'personality_summary' ? calculatePersonalityStats() : null;
-  
+  // Use Icon from above
   return (
     <div className="min-h-screen bg-gradient-primary">
       <div className="container mx-auto px-4 py-8">
@@ -1716,11 +1779,7 @@ if (currentPageObj.type === 'summary') {
 
 // THEN the existing question rendering logic continues here...
   // Assessment questions view
-  // const currentPageObj = assessmentPages[currentPage];
-  const currentQuestion = currentPageObj.questions[currentQuestionIndex];
-  const pageResponses = responses[currentPageObj.id] || {};
-  const currentAnswer = pageResponses[currentQuestion.id];
-  const Icon = currentPageObj.icon;
+  // (Removed duplicate declarations here)
 
   return (
     <div className="min-h-screen bg-gradient-primary">
@@ -1752,33 +1811,33 @@ if (currentPageObj.type === 'summary') {
             <h3 className="text-lg font-medium text-center">{currentQuestion.question}</h3>
             
             <div className="space-y-3">
-              {currentQuestion.options.map((option, index) => (
-                  <Button
-                    key={index}
-                    variant={currentAnswer?.value === option.value ? "default" : "outline"}
-                    className="w-full text-left h-auto p-4 justify-start"
-                    onClick={() => handleAnswer(currentQuestion.id, option)}
-                  >
-                    <div className="flex items-center">
-                      {currentAnswer?.value === option.value && (
-                        currentAnswer?.isCorrect ? (
-                          <CheckCircle className="w-5 h-5 mr-3 text-green-500" />
-                        ) : (
-                          <div className="w-5 h-5 mr-3 text-red-500 flex items-center justify-center">
-                            <span className="text-lg font-bold">✕</span>
-                          </div>
-                        )
+              {(currentQuestion.type === 'choice' ? shuffledOptions : currentQuestion.options).map((option, index) => (
+                <Button
+                  key={index}
+                  variant={currentAnswer?.value === option.value ? "default" : "outline"}
+                  className="w-full text-left h-auto p-4 justify-start"
+                  onClick={() => handleAnswer(currentQuestion.id, option)}
+                >
+                  <div className="flex items-center">
+                    {currentAnswer?.value === option.value && (
+                      currentAnswer?.isCorrect ? (
+                        <CheckCircle className="w-5 h-5 mr-3 text-green-500" />
+                      ) : (
+                        <div className="w-5 h-5 mr-3 text-red-500 flex items-center justify-center">
+                          <span className="text-lg font-bold">✕</span>
+                        </div>
+                      )
+                    )}
+                    <div>
+                      <div className="font-medium">{option.label}</div>
+                      {currentQuestion.type === 'scale' && (
+                        <div className="text-sm text-muted-foreground">
+                          Level {option.value}
+                        </div>
                       )}
-                      <div>
-                        <div className="font-medium">{option.label}</div>
-                        {currentQuestion.type === 'scale' && (
-                          <div className="text-sm text-muted-foreground">
-                            Level {option.value}
-                          </div>
-                        )}
-                      </div>
                     </div>
-                  </Button>
+                  </div>
+                </Button>
               ))}
             </div>
             

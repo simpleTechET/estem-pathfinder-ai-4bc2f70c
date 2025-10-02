@@ -11,12 +11,26 @@ const CareerAssessment = () => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [responses, setResponses] = useState({});
+  type ResponsesType = {
+    [key: string]: any;
+    career_values?: any;
+  };
+  const [responses, setResponses] = useState<ResponsesType>({});
   const [results, setResults] = useState(null);
   const [showingResults, setShowingResults] = useState(false);
   const [big5Scores, setBig5Scores] = useState(null);
   const [showDeeperAssessment, setShowDeeperAssessment] = useState(false);
   const [satisfiedWithResults, setSatisfiedWithResults] = useState(null);
+
+  // Helper function to shuffle array (Fisher-Yates shuffle)
+  const shuffleArray = (array) => {
+    const newArray = [...array];
+    for (let i = newArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+    return newArray;
+  };
 
   const assessmentPages = [
     // Mathematics Assessment
@@ -26,28 +40,29 @@ const CareerAssessment = () => {
       subtitle: 'Basic Mathematical Reasoning',
       icon: Calculator,
       color: 'assessment-blue',
+      isAcademic: true,
       questions: [
         {
           id: 'algebra_basic',
           question: 'Solve for x: 3x + 7 = 22',
           type: 'choice',
-          options: [
+          options: shuffleArray([
             { value: 'correct', label: 'x = 5', correct: true },
             { value: 'wrong1', label: 'x = 3' },
             { value: 'wrong2', label: 'x = 7' },
             { value: 'wrong3', label: 'x = 15' }
-          ]
+          ])
         },
         {
           id: 'percentage',
           question: 'If 60% of students in a class of 40 are girls, how many boys are in the class?',
           type: 'choice',
-          options: [
+          options: shuffleArray([
             { value: 'correct', label: '16 boys', correct: true },
             { value: 'wrong1', label: '24 boys' },
             { value: 'wrong2', label: '20 boys' },
             { value: 'wrong3', label: '14 boys' }
-          ]
+          ])
         }
       ]
     },
@@ -74,28 +89,29 @@ const CareerAssessment = () => {
       subtitle: 'Real-world Problem Solving',
       icon: Calculator,
       color: 'assessment-blue',
+      isAcademic: true,
       questions: [
         {
           id: 'coffee_economics',
           question: 'A coffee farmer in Sidamo produces 1,200 kg of coffee beans per hectare. If the international price is $4.50/kg but local processing adds 30% value, what\'s the best strategy?',
           type: 'choice',
-          options: [
+          options: shuffleArray([
             { value: 'process_locally', label: 'Process locally: $4.50 × 1.30 = $5.85/kg (Higher profit per kg)', correct: true },
             { value: 'sell_raw', label: 'Sell raw beans at $4.50/kg (Quick cash)' },
             { value: 'store_and_wait', label: 'Store beans and wait for price increase' },
             { value: 'sell_half', label: 'Sell half raw, process half' }
-          ]
+          ])
         },
         {
           id: 'urban_planning',
           question: 'Addis Ababa needs a new light rail line. The city has 5 million people, 60% use public transport. If each train carries 300 people and runs every 10 minutes, how many trains are needed for rush hour?',
           type: 'choice',
-          options: [
+          options: shuffleArray([
             { value: 'calculate_demand', label: 'Calculate: 5M × 0.6 × 0.2 (rush hour) ÷ 300 = 2,000 passengers per direction', correct: true },
             { value: 'copy_other_cities', label: 'Copy the same system as other African cities' },
             { value: 'start_small', label: 'Start with 5 trains and expand later' },
             { value: 'use_buses', label: 'Use buses instead - cheaper and more flexible' }
-          ]
+          ])
         }
       ]
     },
@@ -107,28 +123,29 @@ const CareerAssessment = () => {
       subtitle: 'Science in Ethiopian Context',
       icon: FlaskConical,
       color: 'assessment-green',
+      isAcademic: true,
       questions: [
         {
           id: 'altitude_science',
           question: 'You\'re a scientist studying why athletes from Ethiopian highlands excel in long-distance running. What\'s the most scientifically sound explanation?',
           type: 'choice',
-          options: [
+          options: shuffleArray([
             { value: 'altitude_adaptation', label: 'High altitude training increases red blood cell count and oxygen efficiency', correct: true },
             { value: 'genetic_only', label: 'It\'s purely genetic - Ethiopians are just naturally faster' },
             { value: 'diet_based', label: 'Traditional Ethiopian diet provides special nutrients' },
             { value: 'cultural_only', label: 'Running culture and motivation are the only factors' }
-          ]
+          ])
         },
         {
           id: 'medical_innovation',
           question: 'Ethiopia has a shortage of doctors in rural areas. As a biomedical engineer, what\'s your most innovative solution?',
           type: 'choice',
-          options: [
+          options: shuffleArray([
             { value: 'telemedicine_ai', label: 'Develop AI-powered diagnostic tools that health workers can use remotely', correct: true },
             { value: 'train_more_doctors', label: 'Simply train more doctors and force them to work in rural areas' },
             { value: 'import_doctors', label: 'Import doctors from other countries' },
             { value: 'ignore_problem', label: 'Focus on urban healthcare first, rural areas can wait' }
-          ]
+          ])
         }
       ]
     },
@@ -155,28 +172,29 @@ const CareerAssessment = () => {
       subtitle: 'Understanding Society and Culture',
       icon: Globe,
       color: 'assessment-purple',
+      isAcademic: true,
       questions: [
         {
           id: 'federalism_challenge',
           question: 'Ethiopia\'s federal system has 11 regional states. A policy works well in Tigray but fails in Somali region. As a policy analyst, what\'s your approach?',
           type: 'choice',
-          options: [
+          options: shuffleArray([
             { value: 'contextualize_policy', label: 'Study cultural, economic, and geographic differences to adapt the policy', correct: true },
             { value: 'force_uniformity', label: 'Enforce the same policy everywhere - uniformity is important' },
             { value: 'abandon_policy', label: 'If it doesn\'t work everywhere, abandon the policy completely' },
             { value: 'blame_regions', label: 'The regions that failed are just not implementing it correctly' }
-          ]
+          ])
         },
         {
           id: 'diaspora_economics',
           question: 'Ethiopian diaspora sends $5 billion in remittances annually. How can this be leveraged for maximum development impact?',
           type: 'choice',
-          options: [
+          options: shuffleArray([
             { value: 'investment_channels', label: 'Create investment channels for diaspora to fund infrastructure and businesses', correct: true },
             { value: 'just_consumption', label: 'Let families use the money for consumption - it helps the economy anyway' },
             { value: 'government_takes_cut', label: 'Government should tax remittances heavily to fund projects' },
             { value: 'discourage_migration', label: 'Focus on stopping people from leaving instead' }
-          ]
+          ])
         }
       ]
     },
@@ -188,28 +206,29 @@ const CareerAssessment = () => {
       subtitle: 'Multi-dimensional Challenges',
       icon: Brain,
       color: 'personality-openness',
+      isAcademic: true,
       questions: [
         {
           id: 'climate_agriculture',
           question: 'Climate change is affecting rainfall patterns in Ethiopian agriculture. Coffee yields in some areas are dropping 15% per year. You\'re advising the government. What\'s your comprehensive solution?',
           type: 'choice',
-          options: [
+          options: shuffleArray([
             { value: 'integrated_approach', label: 'Combine drought-resistant varieties, farmer education, climate data systems, and alternative livelihood training', correct: true },
             { value: 'technology_only', label: 'Just introduce new drought-resistant coffee varieties' },
             { value: 'abandon_coffee', label: 'Tell farmers to stop growing coffee and switch to other crops' },
             { value: 'wait_and_see', label: 'Wait for international aid and climate finance' }
-          ]
+          ])
         },
         {
           id: 'digital_divide',
           question: 'Only 20% of Ethiopians have internet access, mostly in cities. As a tech policy advisor, how do you bridge this divide sustainably?',
           type: 'choice',
-          options: [
+          options: shuffleArray([
             { value: 'leapfrog_strategy', label: 'Satellite + mobile-first strategy + local language content + digital literacy programs', correct: true },
             { value: 'build_cables', label: 'Build expensive fiber optic cables to every village' },
             { value: 'ignore_rural', label: 'Focus on cities first - rural areas can wait 10-15 years' },
             { value: 'import_solution', label: 'Copy exactly what worked in other African countries' }
-          ]
+          ])
         }
       ]
     },
@@ -524,13 +543,14 @@ const CareerAssessment = () => {
       }
     },
 
-    // Career Values & Interests
+    // Career Values & Interests - NOT ACADEMIC
     {
       id: 'career_values',
       title: 'Career Values & Goals',
       subtitle: 'What Drives You',
       icon: Target,
       color: 'assessment-teal',
+      isAcademic: false, // Mark as not academic
       questions: [
         {
           id: 'impact_type',
@@ -699,7 +719,11 @@ const CareerAssessment = () => {
     // For academic questions, track if answer is correct
     const page = assessmentPages.find(p => p.id === targetPageId);
     const question = page?.questions.find(q => q.id === questionId);
-    const isCorrect = (question?.options.find(opt => opt.value === answer.value) as any)?.correct === true;
+    
+    // Only check for correctness if it's an academic page
+    const isCorrect = page?.isAcademic 
+      ? (question?.options.find(opt => opt.value === answer.value) as any)?.correct === true
+      : null; // null means this is not an academic question
     
     setResponses((prev: any) => ({
       ...prev,
@@ -936,7 +960,7 @@ const CareerAssessment = () => {
         </div>
       </div>
     );
-  }
+  };
 
   // Handle summary slides
   const currentPageObj = assessmentPages[currentPage];
@@ -1016,6 +1040,7 @@ const CareerAssessment = () => {
   const currentAnswer = pageResponses[currentQuestion.id];
   const Icon = currentPageObj.icon;
   const isPersonalityQuestion = currentQuestion.type === 'likert';
+  const isAcademicPage = currentPageObj.isAcademic === true;
 
   return (
     <div className="min-h-screen bg-gradient-primary">
@@ -1055,8 +1080,8 @@ const CareerAssessment = () => {
                   onClick={() => handleAnswer(currentQuestion.id, option)}
                 >
                   <div className="flex items-center">
-                    {/* Only show correct/incorrect indicators for academic questions, not personality */}
-                    {currentAnswer?.value === option.value && !isPersonalityQuestion && (
+                    {/* Only show correct/incorrect indicators for ACADEMIC questions */}
+                    {currentAnswer?.value === option.value && isAcademicPage && !isPersonalityQuestion && (
                       currentAnswer?.isCorrect ? (
                         <CheckCircle className="w-5 h-5 mr-3 text-green-500" />
                       ) : (
@@ -1065,8 +1090,8 @@ const CareerAssessment = () => {
                         </div>
                       )
                     )}
-                    {/* For personality questions, just show selection */}
-                    {currentAnswer?.value === option.value && isPersonalityQuestion && (
+                    {/* For personality and career values questions, just show selection */}
+                    {currentAnswer?.value === option.value && (!isAcademicPage || isPersonalityQuestion) && (
                       <CheckCircle className="w-5 h-5 mr-3 text-blue-500" />
                     )}
                     <div>

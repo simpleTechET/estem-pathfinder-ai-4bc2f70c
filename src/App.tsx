@@ -15,7 +15,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter basename="/pathfinder-ai-64">
+      <BrowserRouter basename="/ESTEM-pathfinder-ai">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/assessment" element={<Assessment />} />
