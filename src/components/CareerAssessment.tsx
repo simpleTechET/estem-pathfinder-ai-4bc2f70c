@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { ChevronRight, CheckCircle, ArrowRight, Target, Brain, Heart, User, Briefcase, Users, BookOpen, Lightbulb, Award, Globe, BarChart, ArrowLeft, FlaskConical, Calculator, MapPin } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -26,24 +26,980 @@ const CareerAssessment = () => {
     const [showDeeperAssessment, setShowDeeperAssessment] = useState(false);
     const [satisfiedWithResults, setSatisfiedWithResults] = useState(null);
 
-    // Utility to shuffle an array (Fisher-Yates)
-    function shuffleArray<T>(array: T[]): T[] {
-      const arr = [...array];
-      for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
+    // Memoize assessmentPages if it must be inside the component
+const assessmentPages = useMemo(() => [
+  // Mathematics Assessment
+  {
+    id: 'mathematics',
+    title: 'Mathematics Assessment',
+    subtitle: 'Grade 7 Level Mathematics',
+    icon: Calculator,
+    color: 'assessment-blue',
+    questions: [
+      {
+        id: 'algebra_basic',
+        question: 'If 60% of students in a class of 40 are girls, how many boys are in the class?',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: '16 boys', correct: true },
+          { value: 'wrong1', label: '24 boys' },
+          { value: 'wrong2', label: '20 boys' },
+          { value: 'wrong3', label: '14 boys' }
+        ]
+      },
+      {
+        id: 'geometry',
+        question: 'What is the area of a rectangle with length 8 cm and width 5 cm?',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: '40 cm²', correct: true },
+          { value: 'wrong1', label: '26 cm²' },
+          { value: 'wrong2', label: '13 cm²' },
+          { value: 'wrong3', label: '80 cm²' }
+        ]
       }
-      return arr;
+    ]
+  },
+
+  // General Science Assessment
+  {
+    id: 'general_science',
+    title: 'General Science Assessment',
+    subtitle: 'Grade 7 Level General Science',
+    icon: FlaskConical,
+    color: 'assessment-green',
+    questions: [
+      {
+        id: 'scientific_method',
+        question: 'What is the correct order of steps in the scientific method?',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Question → Hypothesis → Experiment → Analysis → Conclusion', correct: true },
+          { value: 'wrong1', label: 'Hypothesis → Question → Experiment → Conclusion → Analysis' },
+          { value: 'wrong2', label: 'Experiment → Question → Hypothesis → Analysis → Conclusion' },
+          { value: 'wrong3', label: 'Question → Experiment → Hypothesis → Conclusion → Analysis' }
+        ]
+      },
+      {
+        id: 'states_matter',
+        question: 'When ice melts into water, this is an example of:',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'A physical change', correct: true },
+          { value: 'wrong1', label: 'A chemical change' },
+          { value: 'wrong2', label: 'A nuclear reaction' },
+          { value: 'wrong3', label: 'An irreversible change' }
+        ]
+      },
+      {
+        id: 'ecosystems',
+        question: 'In a food chain, what role do plants typically play?',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Primary producers', correct: true },
+          { value: 'wrong1', label: 'Primary consumers' },
+          { value: 'wrong2', label: 'Secondary consumers' },
+          { value: 'wrong3', label: 'Decomposers' }
+        ]
+      },
+      {
+        id: 'energy_forms',
+        question: 'Which form of energy is stored in food?',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Chemical energy', correct: true },
+          { value: 'wrong1', label: 'Mechanical energy' },
+          { value: 'wrong2', label: 'Electrical energy' },
+          { value: 'wrong3', label: 'Light energy' }
+        ]
+      }
+    ]
+  },
+
+  // Social Studies Assessment
+  {
+    id: 'social_studies',
+    title: 'Social Studies Assessment',
+    subtitle: 'Grade 7 Level Social Studies',
+    icon: Globe,
+    color: 'assessment-purple',
+    questions: [
+      {
+        id: 'ethiopian_history',
+        question: 'What made the Battle of Adwa (1896) historically significant for Ethiopia and Africa?',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Ethiopia defeated Italy, proving African nations could resist European colonization', correct: true },
+          { value: 'wrong1', label: 'It was the first battle fought in the mountains' },
+          { value: 'wrong2', label: 'It established trade routes with Europe' },
+          { value: 'wrong3', label: 'It created the modern Ethiopian calendar' }
+        ]
+      },
+      {
+        id: 'geography',
+        question: 'Which river is considered the source of the Blue Nile?',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Lake Tana', correct: true },
+          { value: 'wrong1', label: 'Lake Victoria' },
+          { value: 'wrong2', label: 'Red Sea' },
+          { value: 'wrong3', label: 'Indian Ocean' }
+        ]
+      },
+      {
+        id: 'government',
+        question: 'What type of government system does Ethiopia currently have?',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Federal parliamentary republic', correct: true },
+          { value: 'wrong1', label: 'Constitutional monarchy' },
+          { value: 'wrong2', label: 'Presidential republic' },
+          { value: 'wrong3', label: 'Military dictatorship' }
+        ]
+      },
+      {
+        id: 'culture',
+        question: 'Which ancient script is still used in Ethiopia today?',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Ge\'ez script', correct: true },
+          { value: 'wrong1', label: 'Arabic script' },
+          { value: 'wrong2', label: 'Latin script' },
+          { value: 'wrong3', label: 'Hieroglyphics' }
+        ]
+      }
+    ]
+  },
+
+  // Physics Assessment
+  {
+    id: 'physics',
+    title: 'Physics Assessment',
+    subtitle: 'Grade 7 Level Physics',
+    icon: Target,
+    color: 'assessment-indigo',
+    questions: [
+      {
+        id: 'motion',
+        question: 'A ball is thrown straight up in the air. At the highest point of its path, what can you say about its velocity and acceleration?',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Velocity is zero, acceleration is downward', correct: true },
+          { value: 'wrong1', label: 'Both velocity and acceleration are zero' },
+          { value: 'wrong2', label: 'Velocity is upward, acceleration is zero' },
+          { value: 'wrong3', label: 'Both velocity and acceleration are downward' }
+        ]
+      },
+      {
+        id: 'forces',
+        question: 'According to Newton\'s first law, an object at rest will:',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Stay at rest unless acted upon by an unbalanced force', correct: true },
+          { value: 'wrong1', label: 'Always start moving after some time' },
+          { value: 'wrong2', label: 'Move in a circular path' },
+          { value: 'wrong3', label: 'Accelerate automatically' }
+        ]
+      },
+      {
+        id: 'energy',
+        question: 'Which has more kinetic energy: a 2kg ball moving at 5 m/s or a 1kg ball moving at 8 m/s?',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: '1kg ball at 8 m/s', correct: true },
+          { value: 'wrong1', label: '2kg ball at 5 m/s' },
+          { value: 'wrong2', label: 'Both have the same kinetic energy' },
+          { value: 'wrong3', label: 'Cannot be determined' }
+        ]
+      },
+      {
+        id: 'light',
+        question: 'When white light passes through a prism, it separates into different colors because:',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Different colors have different wavelengths and bend at different angles', correct: true },
+          { value: 'wrong1', label: 'The prism adds color to the light' },
+          { value: 'wrong2', label: 'Light always contains hidden colors' },
+          { value: 'wrong3', label: 'The prism creates new colors' }
+        ]
+      }
+    ]
+  },
+
+  // Chemistry Assessment
+  {
+    id: 'chemistry',
+    title: 'Chemistry Assessment',
+    subtitle: 'Grade 7 Level Chemistry',
+    icon: FlaskConical,
+    color: 'assessment-orange',
+    questions: [
+      {
+        id: 'atoms',
+        question: 'What is the smallest unit of a chemical element?',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Atom', correct: true },
+          { value: 'wrong1', label: 'Molecule' },
+          { value: 'wrong2', label: 'Compound' },
+          { value: 'wrong3', label: 'Cell' }
+        ]
+      },
+      {
+        id: 'periodic_table',
+        question: 'Elements in the same column (group) of the periodic table have similar:',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Chemical properties', correct: true },
+          { value: 'wrong1', label: 'Atomic mass' },
+          { value: 'wrong2', label: 'Number of neutrons' },
+          { value: 'wrong3', label: 'Physical appearance' }
+        ]
+      },
+      {
+        id: 'chemical_reactions',
+        question: 'In the chemical equation H₂ + Cl₂ → 2HCl, what type of reaction is this?',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Synthesis (combination) reaction', correct: true },
+          { value: 'wrong1', label: 'Decomposition reaction' },
+          { value: 'wrong2', label: 'Single replacement reaction' },
+          { value: 'wrong3', label: 'Double replacement reaction' }
+        ]
+      },
+      {
+        id: 'ph_scale',
+        question: 'A solution with pH 3 is:',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Acidic', correct: true },
+          { value: 'wrong1', label: 'Basic (alkaline)' },
+          { value: 'wrong2', label: 'Neutral' },
+          { value: 'wrong3', label: 'Pure water' }
+        ]
+      }
+    ]
+  },
+
+  // Biology Assessment
+  {
+    id: 'biology',
+    title: 'Biology Assessment',
+    subtitle: 'Grade 7 Level Biology',
+    icon: Heart,
+    color: 'assessment-green',
+    questions: [
+      {
+        id: 'body_systems',
+        question: 'Why do we need both the circulatory and respiratory systems working together?',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'To transport oxygen from lungs to body cells and remove carbon dioxide', correct: true },
+          { value: 'wrong1', label: 'To help us digest food faster' },
+          { value: 'wrong2', label: 'To make our heart beat stronger' },
+          { value: 'wrong3', label: 'To control our body temperature' }
+        ]
+      },
+      {
+        id: 'cells',
+        question: 'What is the basic unit of all living things?',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Cell', correct: true },
+          { value: 'wrong1', label: 'Tissue' },
+          { value: 'wrong2', label: 'Organ' },
+          { value: 'wrong3', label: 'Organism' }
+        ]
+      },
+      {
+        id: 'photosynthesis',
+        question: 'During photosynthesis, plants convert:',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Carbon dioxide and water into glucose and oxygen', correct: true },
+          { value: 'wrong1', label: 'Oxygen and glucose into carbon dioxide and water' },
+          { value: 'wrong2', label: 'Sunlight directly into food' },
+          { value: 'wrong3', label: 'Water into oxygen only' }
+        ]
+      },
+      {
+        id: 'genetics',
+        question: 'Traits are passed from parents to offspring through:',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Genes and chromosomes', correct: true },
+          { value: 'wrong1', label: 'Blood type only' },
+          { value: 'wrong2', label: 'Environmental factors only' },
+          { value: 'wrong3', label: 'Diet and exercise' }
+        ]
+      }
+    ]
+  },
+
+  // Information Technology Assessment
+  {
+    id: 'information_technology',
+    title: 'Information Technology Assessment',
+    subtitle: 'Grade 7 Level IT Skills',
+    icon: Code,
+    color: 'assessment-blue',
+    questions: [
+      {
+        id: 'computer_basics',
+        question: 'What does CPU stand for?',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Central Processing Unit', correct: true },
+          { value: 'wrong1', label: 'Computer Personal Unit' },
+          { value: 'wrong2', label: 'Central Program Unit' },
+          { value: 'wrong3', label: 'Computer Processing User' }
+        ]
+      },
+      {
+        id: 'internet_safety',
+        question: 'Which of these is the SAFEST way to create a password?',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Use a mix of letters, numbers, and symbols that only you know', correct: true },
+          { value: 'wrong1', label: 'Use your birthday and name' },
+          { value: 'wrong2', label: 'Use the same password for all accounts' },
+          { value: 'wrong3', label: 'Use simple words like "password123"' }
+        ]
+      },
+      {
+        id: 'software_types',
+        question: 'Microsoft Word is an example of what type of software?',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Application software', correct: true },
+          { value: 'wrong1', label: 'System software' },
+          { value: 'wrong2', label: 'Hardware' },
+          { value: 'wrong3', label: 'Programming language' }
+        ]
+      },
+      {
+        id: 'digital_citizenship',
+        question: 'What should you do if you encounter cyberbullying online?',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Report it to a trusted adult and block the bully', correct: true },
+          { value: 'wrong1', label: 'Respond with mean comments back' },
+          { value: 'wrong2', label: 'Ignore it completely and do nothing' },
+          { value: 'wrong3', label: 'Share the bullying content with friends' }
+        ]
+      }
+    ]
+  },
+
+  // Performing and Visual Arts Assessment
+  {
+    id: 'performing_visual_arts',
+    title: 'Performing & Visual Arts Assessment',
+    subtitle: 'Grade 7 Level Arts',
+    icon: Lightbulb,
+    color: 'assessment-pink',
+    questions: [
+      {
+        id: 'color_theory',
+        question: 'What are the three primary colors?',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Red, Blue, Yellow', correct: true },
+          { value: 'wrong1', label: 'Red, Green, Blue' },
+          { value: 'wrong2', label: 'Yellow, Orange, Purple' },
+          { value: 'wrong3', label: 'Black, White, Gray' }
+        ]
+      },
+      {
+        id: 'music_basics',
+        question: 'How many beats are in a measure of 4/4 time?',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Four beats', correct: true },
+          { value: 'wrong1', label: 'Three beats' },
+          { value: 'wrong2', label: 'Two beats' },
+          { value: 'wrong3', label: 'Eight beats' }
+        ]
+      },
+      {
+        id: 'ethiopian_arts',
+        question: 'Traditional Ethiopian church paintings often feature:',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Religious scenes with bright colors and symbolic figures', correct: true },
+          { value: 'wrong1', label: 'Abstract geometric patterns only' },
+          { value: 'wrong2', label: 'Realistic portraits of everyday people' },
+          { value: 'wrong3', label: 'Modern cityscapes' }
+        ]
+      },
+      {
+        id: 'drama_elements',
+        question: 'In theater, what do we call the written text of a play?',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Script', correct: true },
+          { value: 'wrong1', label: 'Stage' },
+          { value: 'wrong2', label: 'Props' },
+          { value: 'wrong3', label: 'Costume' }
+        ]
+      }
+    ]
+  },
+
+  // Career and Technical Education Assessment
+  {
+    id: 'career_technical_education',
+    title: 'Career & Technical Education Assessment',
+    subtitle: 'Grade 7 Level Career Skills',
+    icon: Briefcase,
+    color: 'assessment-orange',
+    questions: [
+      {
+        id: 'problem_solving',
+        question: 'When facing a complex problem at work or school, what\'s the best first step?',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Break the problem down into smaller, manageable parts', correct: true },
+          { value: 'wrong1', label: 'Ask someone else to solve it for you' },
+          { value: 'wrong2', label: 'Guess at a solution and try it immediately' },
+          { value: 'wrong3', label: 'Wait for the problem to solve itself' }
+        ]
+      },
+      {
+        id: 'teamwork',
+        question: 'In a group project, if you disagree with a teammate\'s idea, you should:',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Listen respectfully and suggest alternatives with reasons', correct: true },
+          { value: 'wrong1', label: 'Tell them their idea is wrong immediately' },
+          { value: 'wrong2', label: 'Stay quiet and go along with it' },
+          { value: 'wrong3', label: 'Do the project your own way without telling them' }
+        ]
+      },
+      {
+        id: 'time_management',
+        question: 'You have three assignments due this week. What\'s the best approach?',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Make a schedule, prioritize by due date and importance', correct: true },
+          { value: 'wrong1', label: 'Do the easiest one first and hope for the best' },
+          { value: 'wrong2', label: 'Wait until the last minute to start all three' },
+          { value: 'wrong3', label: 'Ask for extensions on all assignments' }
+        ]
+      },
+      {
+        id: 'communication',
+        question: 'When giving a presentation, eye contact helps you:',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Connect with your audience and appear more confident', correct: true },
+          { value: 'wrong1', label: 'Remember what to say next' },
+          { value: 'wrong2', label: 'Read your notes better' },
+          { value: 'wrong3', label: 'Finish the presentation faster' }
+        ]
+      }
+    ]
+  },
+
+  // SUMMARY SLIDE - Academic Assessments Complete
+  {
+    id: 'academic_summary',
+    title: 'Academic Assessment Complete',
+    subtitle: 'Your Academic Strengths Summary',
+    icon: Award,
+    color: 'assessment-teal',
+    type: 'summary',
+    content: {
+      title: 'Great work on the academic assessments!',
+      description: 'We\'ve evaluated your skills across all major subject areas. Now let\'s explore your personality traits to find careers that match both your abilities and your natural preferences.',
+      nextSection: 'Next: Personality Assessment',
+      stats: true
     }
-  // Removed problematic top-of-file declaration of currentQuestion. Will declare after assessmentPages.
-  
-  // Move assessmentPages definition above its first use
-  
-  // (Removed duplicate declaration of assessmentPages here. The actual definition remains below.)
+  },
 
-  // Memoize shuffled options per question id for stable shuffling during session
-  const [shuffledMap, setShuffledMap] = useState<{ [key: string]: any[] }>({});
+  // Big 5 Personality Assessments
+  {
+    id: 'openness',
+    title: 'Intellectual Curiosity',
+    subtitle: 'Big 5: Openness to Experience',
+    icon: Lightbulb,
+    color: 'personality-openness',
+    questions: [
+      {
+        id: 'new_ideas',
+        question: 'I am always curious about how things work.',
+        type: 'likert',
+        options: [
+          { value: 1, label: 'Strongly Disagree' },
+          { value: 2, label: 'Disagree' },
+          { value: 3, label: 'Neutral' },
+          { value: 4, label: 'Agree' },
+          { value: 5, label: 'Strongly Agree' }
+        ]
+      },
+      {
+        id: 'abstract_thinking',
+        question: 'I enjoy thinking about abstract concepts and theories.',
+        type: 'likert',
+        options: [
+          { value: 1, label: 'Strongly Disagree' },
+          { value: 2, label: 'Disagree' },
+          { value: 3, label: 'Neutral' },
+          { value: 4, label: 'Agree' },
+          { value: 5, label: 'Strongly Agree' }
+        ]
+      },
+      {
+        id: 'creativity',
+        question: 'I often come up with creative solutions to problems.',
+        type: 'likert',
+        options: [
+          { value: 1, label: 'Strongly Disagree' },
+          { value: 2, label: 'Disagree' },
+          { value: 3, label: 'Neutral' },
+          { value: 4, label: 'Agree' },
+          { value: 5, label: 'Strongly Agree' }
+        ]
+      },
+      {
+        id: 'learning_appetite',
+        question: 'I actively seek out new learning experiences.',
+        type: 'likert',
+        options: [
+          { value: 1, label: 'Strongly Disagree' },
+          { value: 2, label: 'Disagree' },
+          { value: 3, label: 'Neutral' },
+          { value: 4, label: 'Agree' },
+          { value: 5, label: 'Strongly Agree' }
+        ]
+      },
+      {
+        id: 'artistic_appreciation',
+        question: 'I have a strong appreciation for art, music, or literature.',
+        type: 'likert',
+        options: [
+          { value: 1, label: 'Strongly Disagree' },
+          { value: 2, label: 'Disagree' },
+          { value: 3, label: 'Neutral' },
+          { value: 4, label: 'Agree' },
+          { value: 5, label: 'Strongly Agree' }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'conscientiousness',
+    title: 'Work Style & Organization',
+    subtitle: 'Big 5: Conscientiousness',
+    icon: Award,
+    color: 'personality-conscientiousness',
+    questions: [
+      {
+        id: 'organization',
+        question: 'I keep my workspace and materials well-organized.',
+        type: 'likert',
+        options: [
+          { value: 1, label: 'Strongly Disagree' },
+          { value: 2, label: 'Disagree' },
+          { value: 3, label: 'Neutral' },
+          { value: 4, label: 'Agree' },
+          { value: 5, label: 'Strongly Agree' }
+        ]
+      },
+      {
+        id: 'persistence',
+        question: 'I finish projects even when they become difficult or boring.',
+        type: 'likert',
+        options: [
+          { value: 1, label: 'Strongly Disagree' },
+          { value: 2, label: 'Disagree' },
+          { value: 3, label: 'Neutral' },
+          { value: 4, label: 'Agree' },
+          { value: 5, label: 'Strongly Agree' }
+        ]
+      },
+      {
+        id: 'planning',
+        question: 'I prefer to plan my work in advance rather than improvise.',
+        type: 'likert',
+        options: [
+          { value: 1, label: 'Strongly Disagree' },
+          { value: 2, label: 'Disagree' },
+          { value: 3, label: 'Neutral' },
+          { value: 4, label: 'Agree' },
+          { value: 5, label: 'Strongly Agree' }
+        ]
+      },
+      {
+        id: 'deadlines',
+        question: 'I always meet deadlines and rarely procrastinate.',
+        type: 'likert',
+        options: [
+          { value: 1, label: 'Strongly Disagree' },
+          { value: 2, label: 'Disagree' },
+          { value: 3, label: 'Neutral' },
+          { value: 4, label: 'Agree' },
+          { value: 5, label: 'Strongly Agree' }
+        ]
+      },
+      {
+        id: 'attention_detail',
+        question: 'I pay careful attention to details in my work.',
+        type: 'likert',
+        options: [
+          { value: 1, label: 'Strongly Disagree' },
+          { value: 2, label: 'Disagree' },
+          { value: 3, label: 'Neutral' },
+          { value: 4, label: 'Agree' },
+          { value: 5, label: 'Strongly Agree' }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'extraversion',
+    title: 'Social Energy & Leadership',
+    subtitle: 'Big 5: Extraversion',
+    icon: Users,
+    color: 'personality-extraversion',
+    questions: [
+      {
+        id: 'social_energy',
+        question: 'I feel energized after spending time with groups of people.',
+        type: 'likert',
+        options: [
+          { value: 1, label: 'Strongly Disagree' },
+          { value: 2, label: 'Disagree' },
+          { value: 3, label: 'Neutral' },
+          { value: 4, label: 'Agree' },
+          { value: 5, label: 'Strongly Agree' }
+        ]
+      },
+      {
+        id: 'leadership',
+        question: 'I naturally take charge in group situations.',
+        type: 'likert',
+        options: [
+          { value: 1, label: 'Strongly Disagree' },
+          { value: 2, label: 'Disagree' },
+          { value: 3, label: 'Neutral' },
+          { value: 4, label: 'Agree' },
+          { value: 5, label: 'Strongly Agree' }
+        ]
+      },
+      {
+        id: 'public_speaking',
+        question: 'I enjoy presenting my ideas to large groups.',
+        type: 'likert',
+        options: [
+          { value: 1, label: 'Strongly Disagree' },
+          { value: 2, label: 'Disagree' },
+          { value: 3, label: 'Neutral' },
+          { value: 4, label: 'Agree' },
+          { value: 5, label: 'Strongly Agree' }
+        ]
+      },
+      {
+        id: 'networking',
+        question: 'I easily start conversations with strangers.',
+        type: 'likert',
+        options: [
+          { value: 1, label: 'Strongly Disagree' },
+          { value: 2, label: 'Disagree' },
+          { value: 3, label: 'Neutral' },
+          { value: 4, label: 'Agree' },
+          { value: 5, label: 'Strongly Agree' }
+        ]
+      },
+      {
+        id: 'assertiveness',
+        question: 'I assertively express my opinions and ideas.',
+        type: 'likert',
+        options: [
+          { value: 1, label: 'Strongly Disagree' },
+          { value: 2, label: 'Disagree' },
+          { value: 3, label: 'Neutral' },
+          { value: 4, label: 'Agree' },
+          { value: 5, label: 'Strongly Agree' }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'agreeableness',
+    title: 'Collaboration & Empathy',
+    subtitle: 'Big 5: Agreeableness',
+    icon: Heart,
+    color: 'personality-agreeableness',
+    questions: [
+      {
+        id: 'cooperation',
+        question: 'I prefer collaborative work over competition.',
+        type: 'likert',
+        options: [
+          { value: 1, label: 'Strongly Disagree' },
+          { value: 2, label: 'Disagree' },
+          { value: 3, label: 'Neutral' },
+          { value: 4, label: 'Agree' },
+          { value: 5, label: 'Strongly Agree' }
+        ]
+      },
+      {
+        id: 'empathy',
+        question: 'I can easily sense when others are upset or stressed.',
+        type: 'likert',
+        options: [
+          { value: 1, label: 'Strongly Disagree' },
+          { value: 2, label: 'Disagree' },
+          { value: 3, label: 'Neutral' },
+          { value: 4, label: 'Agree' },
+          { value: 5, label: 'Strongly Agree' }
+        ]
+      },
+      {
+        id: 'helping',
+        question: 'I go out of my way to help others, even when it\'s inconvenient.',
+        type: 'likert',
+        options: [
+          { value: 1, label: 'Strongly Disagree' },
+          { value: 2, label: 'Disagree' },
+          { value: 3, label: 'Neutral' },
+          { value: 4, label: 'Agree' },
+          { value: 5, label: 'Strongly Agree' }
+        ]
+      },
+      {
+        id: 'conflict_resolution',
+        question: 'I work hard to resolve conflicts and find win-win solutions.',
+        type: 'likert',
+        options: [
+          { value: 1, label: 'Strongly Disagree' },
+          { value: 2, label: 'Disagree' },
+          { value: 3, label: 'Neutral' },
+          { value: 4, label: 'Agree' },
+          { value: 5, label: 'Strongly Agree' }
+        ]
+      },
+      {
+        id: 'trust',
+        question: 'I generally trust that people have good intentions.',
+        type: 'likert',
+        options: [
+          { value: 1, label: 'Strongly Disagree' },
+          { value: 2, label: 'Disagree' },
+          { value: 3, label: 'Neutral' },
+          { value: 4, label: 'Agree' },
+          { value: 5, label: 'Strongly Agree' }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'neuroticism',
+    title: 'Emotional Resilience',
+    subtitle: 'Big 5: Emotional Stability',
+    icon: Brain,
+    color: 'personality-emotional',
+    questions: [
+      {
+        id: 'stress_management',
+        question: 'I remain calm under pressure and tight deadlines.',
+        type: 'likert',
+        options: [
+          { value: 5, label: 'Strongly Agree' },
+          { value: 4, label: 'Agree' },
+          { value: 3, label: 'Neutral' },
+          { value: 2, label: 'Disagree' },
+          { value: 1, label: 'Strongly Disagree' }
+        ]
+      },
+      {
+        id: 'emotional_stability',
+        question: 'My mood stays relatively stable throughout the day.',
+        type: 'likert',
+        options: [
+          { value: 5, label: 'Strongly Agree' },
+          { value: 4, label: 'Agree' },
+          { value: 3, label: 'Neutral' },
+          { value: 2, label: 'Disagree' },
+          { value: 1, label: 'Strongly Disagree' }
+        ]
+      },
+      {
+        id: 'confidence',
+        question: 'I feel confident in my abilities to handle challenges.',
+        type: 'likert',
+        options: [
+          { value: 5, label: 'Strongly Agree' },
+          { value: 4, label: 'Agree' },
+          { value: 3, label: 'Neutral' },
+          { value: 2, label: 'Disagree' },
+          { value: 1, label: 'Strongly Disagree' }
+        ]
+      },
+      {
+        id: 'adaptability',
+        question: 'I adapt quickly when plans change unexpectedly.',
+        type: 'likert',
+        options: [
+          { value: 5, label: 'Strongly Agree' },
+          { value: 4, label: 'Agree' },
+          { value: 3, label: 'Neutral' },
+          { value: 2, label: 'Disagree' },
+          { value: 1, label: 'Strongly Disagree' }
+        ]
+      },
+      {
+        id: 'optimism',
+        question: 'I generally expect positive outcomes from situations.',
+        type: 'likert',
+        options: [
+          { value: 5, label: 'Strongly Agree' },
+          { value: 4, label: 'Agree' },
+          { value: 3, label: 'Neutral' },
+          { value: 2, label: 'Disagree' },
+          { value: 1, label: 'Strongly Disagree' }
+        ]
+      }
+    ]
+  },
 
+  // SUMMARY SLIDE - Personality Assessment Complete  
+  {
+    id: 'personality_summary',
+    title: 'Personality Assessment Complete',
+    subtitle: 'Your Personality Profile Summary',
+    icon: Brain,
+    color: 'personality-openness',
+    type: 'summary',
+    content: {
+      title: 'Great! We now understand your personality.',
+      description: 'We\'ve assessed your Big 5 personality traits. Now let\'s explore your career values and interests to complete your profile.',
+      nextSection: 'Final Section: Career Interests',
+      stats: true
+    }
+  },
+
+  // Career Interests Assessment
+  {
+    id: 'career_interests',
+    title: 'Career Values & Goals',
+    subtitle: 'What Motivates You',
+    icon: Target,
+    color: 'assessment-teal',
+    questions: [
+      {
+        id: 'work_values',
+        question: 'What matters most to you in a career? (Choose your top priority)',
+        type: 'choice',
+        options: [
+          { value: 'intellectual_challenge', label: 'Intellectual stimulation and complex problems' },
+          { value: 'helping_others', label: 'Making a positive impact on people\'s lives' },
+          { value: 'creativity', label: 'Creative expression and innovation' },
+          { value: 'financial_success', label: 'Financial security and high earning potential' },
+          { value: 'autonomy', label: 'Independence and flexible work arrangements' },
+          { value: 'recognition', label: 'Recognition and professional prestige' }
+        ]
+      },
+      {
+        id: 'impact_scale',
+        question: 'What scale of impact do you want to have?',
+        type: 'choice',
+        options: [
+          { value: 'individual', label: 'One-on-one: Directly helping individual people' },
+          { value: 'local', label: 'Community: Improving your local area' },
+          { value: 'organizational', label: 'Institutional: Changing how organizations work' },
+          { value: 'societal', label: 'Societal: Addressing broad social issues' },
+          { value: 'global', label: 'Global: Solving problems that affect humanity' }
+        ]
+      },
+      {
+        id: 'work_environment',
+        question: 'Where do you see yourself thriving?',
+        type: 'choice',
+        options: [
+          { value: 'lab', label: 'Research laboratory or clinical setting' },
+          { value: 'office', label: 'Corporate office with team collaboration' },
+          { value: 'field', label: 'Field work and data collection' },
+          { value: 'remote', label: 'Remote work with digital collaboration' },
+          { value: 'varied', label: 'Constantly changing locations and contexts' },
+          { value: 'entrepreneurial', label: 'Startup or entrepreneurial environment' }
+        ]
+      },
+      {
+        id: 'career_timeline',
+        question: 'How do you prefer to advance in your career?',
+        type: 'choice',
+        options: [
+          { value: 'fast_track', label: 'Quick advancement with high responsibility early on' },
+          { value: 'steady_climb', label: 'Steady, predictable progression over time' },
+          { value: 'expertise', label: 'Becoming a deep expert in a specific area' },
+          { value: 'diverse', label: 'Exploring different roles and industries' },
+          { value: 'entrepreneurial', label: 'Building something new or starting my own venture' }
+        ]
+      },
+      {
+        id: 'work_life_balance',
+        question: 'How important is work-life balance to you?',
+        type: 'choice',
+        options: [
+          { value: 'essential', label: 'Essential - I need clear boundaries between work and personal life' },
+          { value: 'important', label: 'Important - I want flexibility but can work harder when needed' },
+          { value: 'moderate', label: 'Moderate - I\'m willing to work long hours for meaningful work' },
+          { value: 'flexible', label: 'Flexible - I can adapt to what the job requires' },
+          { value: 'career_focused', label: 'Career-focused - I\'m willing to prioritize career growth' }
+        ]
+      }
+    ]
+  }
+], []);
+const [shuffledOptionsMap] = useState(() => {
+  const map: { [key: string]: any[] } = {};
+  assessmentPages.forEach((page, pageIdx) => {
+    if (page.questions) {
+      page.questions.forEach((question, qIdx) => {
+        const key = `${pageIdx}-${qIdx}`;
+        if (question.type === 'choice' && question.options[0]?.correct !== undefined) {
+          // Only shuffle academic questions (those with correct answers)
+          map[key] = shuffleArray(question.options);
+        } else {
+          // Keep personality/career questions in original order
+          map[key] = question.options;
+        }
+      });
+    }
+  });
+  return map;
+});
+  // Utility to shuffle an array (Fisher-Yates)
+function shuffleArray<T>(array: T[]): T[] {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// Initialize shuffledOptionsMap ONCE
+// const [shuffledOptionsMap] = useState(() => {
+//   const map: { [key: string]: any[] } = {};
+//   assessmentPages.forEach((page, pageIdx) => {
+//     if (page.questions) {
+//       page.questions.forEach((question, qIdx) => {
+//         const key = `${pageIdx}-${qIdx}`;
+//         if (question.type === 'choice' && question.options[0]?.correct !== undefined) {
+//           // Only shuffle academic questions (those with correct answers)
+//           map[key] = shuffleArray(question.options);
+//         } else {
+//           // Keep personality/career questions in original order
+//           map[key] = question.options;
+//         }
+//       });
+//     }
+//   });
+//   return map;
+// });
   // Declare currentPageObj and currentQuestion before using them
   // const currentPageObj = assessmentPages[currentPage];
   // const pageResponses = responses[currentPageObj.id] || {};
@@ -130,966 +1086,16 @@ const CareerAssessment = () => {
     }
   ];
 
-  const assessmentPages = [
-    // Mathematics Assessment
-    {
-      id: 'mathematics',
-      title: 'Mathematics Assessment',
-      subtitle: 'Grade 7 Level Mathematics',
-      icon: Calculator,
-      color: 'assessment-blue',
-      questions: [
-        {
-          id: 'algebra_basic',
-          question: 'If 60% of students in a class of 40 are girls, how many boys are in the class?',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: '16 boys', correct: true },
-            { value: 'wrong1', label: '24 boys' },
-            { value: 'wrong2', label: '20 boys' },
-            { value: 'wrong3', label: '14 boys' }
-          ]
-        },
-        {
-          id: 'geometry',
-          question: 'What is the area of a rectangle with length 8 cm and width 5 cm?',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: '40 cm²', correct: true },
-            { value: 'wrong1', label: '26 cm²' },
-            { value: 'wrong2', label: '13 cm²' },
-            { value: 'wrong3', label: '80 cm²' }
-          ]
-        }
-      ]
-    },
-
-    // General Science Assessment
-    {
-      id: 'general_science',
-      title: 'General Science Assessment',
-      subtitle: 'Grade 7 Level General Science',
-      icon: FlaskConical,
-      color: 'assessment-green',
-      questions: [
-        {
-          id: 'scientific_method',
-          question: 'What is the correct order of steps in the scientific method?',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Question → Hypothesis → Experiment → Analysis → Conclusion', correct: true },
-            { value: 'wrong1', label: 'Hypothesis → Question → Experiment → Conclusion → Analysis' },
-            { value: 'wrong2', label: 'Experiment → Question → Hypothesis → Analysis → Conclusion' },
-            { value: 'wrong3', label: 'Question → Experiment → Hypothesis → Conclusion → Analysis' }
-          ]
-        },
-        {
-          id: 'states_matter',
-          question: 'When ice melts into water, this is an example of:',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'A physical change', correct: true },
-            { value: 'wrong1', label: 'A chemical change' },
-            { value: 'wrong2', label: 'A nuclear reaction' },
-            { value: 'wrong3', label: 'An irreversible change' }
-          ]
-        },
-        {
-          id: 'ecosystems',
-          question: 'In a food chain, what role do plants typically play?',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Primary producers', correct: true },
-            { value: 'wrong1', label: 'Primary consumers' },
-            { value: 'wrong2', label: 'Secondary consumers' },
-            { value: 'wrong3', label: 'Decomposers' }
-          ]
-        },
-        {
-          id: 'energy_forms',
-          question: 'Which form of energy is stored in food?',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Chemical energy', correct: true },
-            { value: 'wrong1', label: 'Mechanical energy' },
-            { value: 'wrong2', label: 'Electrical energy' },
-            { value: 'wrong3', label: 'Light energy' }
-          ]
-        }
-      ]
-    },
-
-    // Social Studies Assessment
-    {
-      id: 'social_studies',
-      title: 'Social Studies Assessment',
-      subtitle: 'Grade 7 Level Social Studies',
-      icon: Globe,
-      color: 'assessment-purple',
-      questions: [
-        {
-          id: 'ethiopian_history',
-          question: 'What made the Battle of Adwa (1896) historically significant for Ethiopia and Africa?',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Ethiopia defeated Italy, proving African nations could resist European colonization', correct: true },
-            { value: 'wrong1', label: 'It was the first battle fought in the mountains' },
-            { value: 'wrong2', label: 'It established trade routes with Europe' },
-            { value: 'wrong3', label: 'It created the modern Ethiopian calendar' }
-          ]
-        },
-        {
-          id: 'geography',
-          question: 'Which river is considered the source of the Blue Nile?',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Lake Tana', correct: true },
-            { value: 'wrong1', label: 'Lake Victoria' },
-            { value: 'wrong2', label: 'Red Sea' },
-            { value: 'wrong3', label: 'Indian Ocean' }
-          ]
-        },
-        {
-          id: 'government',
-          question: 'What type of government system does Ethiopia currently have?',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Federal parliamentary republic', correct: true },
-            { value: 'wrong1', label: 'Constitutional monarchy' },
-            { value: 'wrong2', label: 'Presidential republic' },
-            { value: 'wrong3', label: 'Military dictatorship' }
-          ]
-        },
-        {
-          id: 'culture',
-          question: 'Which ancient script is still used in Ethiopia today?',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Ge\'ez script', correct: true },
-            { value: 'wrong1', label: 'Arabic script' },
-            { value: 'wrong2', label: 'Latin script' },
-            { value: 'wrong3', label: 'Hieroglyphics' }
-          ]
-        }
-      ]
-    },
-
-    // Physics Assessment
-    {
-      id: 'physics',
-      title: 'Physics Assessment',
-      subtitle: 'Grade 7 Level Physics',
-      icon: Target,
-      color: 'assessment-indigo',
-      questions: [
-        {
-          id: 'motion',
-          question: 'A ball is thrown straight up in the air. At the highest point of its path, what can you say about its velocity and acceleration?',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Velocity is zero, acceleration is downward', correct: true },
-            { value: 'wrong1', label: 'Both velocity and acceleration are zero' },
-            { value: 'wrong2', label: 'Velocity is upward, acceleration is zero' },
-            { value: 'wrong3', label: 'Both velocity and acceleration are downward' }
-          ]
-        },
-        {
-          id: 'forces',
-          question: 'According to Newton\'s first law, an object at rest will:',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Stay at rest unless acted upon by an unbalanced force', correct: true },
-            { value: 'wrong1', label: 'Always start moving after some time' },
-            { value: 'wrong2', label: 'Move in a circular path' },
-            { value: 'wrong3', label: 'Accelerate automatically' }
-          ]
-        },
-        {
-          id: 'energy',
-          question: 'Which has more kinetic energy: a 2kg ball moving at 5 m/s or a 1kg ball moving at 8 m/s?',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: '1kg ball at 8 m/s', correct: true },
-            { value: 'wrong1', label: '2kg ball at 5 m/s' },
-            { value: 'wrong2', label: 'Both have the same kinetic energy' },
-            { value: 'wrong3', label: 'Cannot be determined' }
-          ]
-        },
-        {
-          id: 'light',
-          question: 'When white light passes through a prism, it separates into different colors because:',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Different colors have different wavelengths and bend at different angles', correct: true },
-            { value: 'wrong1', label: 'The prism adds color to the light' },
-            { value: 'wrong2', label: 'Light always contains hidden colors' },
-            { value: 'wrong3', label: 'The prism creates new colors' }
-          ]
-        }
-      ]
-    },
-
-    // Chemistry Assessment
-    {
-      id: 'chemistry',
-      title: 'Chemistry Assessment',
-      subtitle: 'Grade 7 Level Chemistry',
-      icon: FlaskConical,
-      color: 'assessment-orange',
-      questions: [
-        {
-          id: 'atoms',
-          question: 'What is the smallest unit of a chemical element?',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Atom', correct: true },
-            { value: 'wrong1', label: 'Molecule' },
-            { value: 'wrong2', label: 'Compound' },
-            { value: 'wrong3', label: 'Cell' }
-          ]
-        },
-        {
-          id: 'periodic_table',
-          question: 'Elements in the same column (group) of the periodic table have similar:',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Chemical properties', correct: true },
-            { value: 'wrong1', label: 'Atomic mass' },
-            { value: 'wrong2', label: 'Number of neutrons' },
-            { value: 'wrong3', label: 'Physical appearance' }
-          ]
-        },
-        {
-          id: 'chemical_reactions',
-          question: 'In the chemical equation H₂ + Cl₂ → 2HCl, what type of reaction is this?',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Synthesis (combination) reaction', correct: true },
-            { value: 'wrong1', label: 'Decomposition reaction' },
-            { value: 'wrong2', label: 'Single replacement reaction' },
-            { value: 'wrong3', label: 'Double replacement reaction' }
-          ]
-        },
-        {
-          id: 'ph_scale',
-          question: 'A solution with pH 3 is:',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Acidic', correct: true },
-            { value: 'wrong1', label: 'Basic (alkaline)' },
-            { value: 'wrong2', label: 'Neutral' },
-            { value: 'wrong3', label: 'Pure water' }
-          ]
-        }
-      ]
-    },
-
-    // Biology Assessment
-    {
-      id: 'biology',
-      title: 'Biology Assessment',
-      subtitle: 'Grade 7 Level Biology',
-      icon: Heart,
-      color: 'assessment-green',
-      questions: [
-        {
-          id: 'body_systems',
-          question: 'Why do we need both the circulatory and respiratory systems working together?',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'To transport oxygen from lungs to body cells and remove carbon dioxide', correct: true },
-            { value: 'wrong1', label: 'To help us digest food faster' },
-            { value: 'wrong2', label: 'To make our heart beat stronger' },
-            { value: 'wrong3', label: 'To control our body temperature' }
-          ]
-        },
-        {
-          id: 'cells',
-          question: 'What is the basic unit of all living things?',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Cell', correct: true },
-            { value: 'wrong1', label: 'Tissue' },
-            { value: 'wrong2', label: 'Organ' },
-            { value: 'wrong3', label: 'Organism' }
-          ]
-        },
-        {
-          id: 'photosynthesis',
-          question: 'During photosynthesis, plants convert:',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Carbon dioxide and water into glucose and oxygen', correct: true },
-            { value: 'wrong1', label: 'Oxygen and glucose into carbon dioxide and water' },
-            { value: 'wrong2', label: 'Sunlight directly into food' },
-            { value: 'wrong3', label: 'Water into oxygen only' }
-          ]
-        },
-        {
-          id: 'genetics',
-          question: 'Traits are passed from parents to offspring through:',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Genes and chromosomes', correct: true },
-            { value: 'wrong1', label: 'Blood type only' },
-            { value: 'wrong2', label: 'Environmental factors only' },
-            { value: 'wrong3', label: 'Diet and exercise' }
-          ]
-        }
-      ]
-    },
-
-    // Information Technology Assessment
-    {
-      id: 'information_technology',
-      title: 'Information Technology Assessment',
-      subtitle: 'Grade 7 Level IT Skills',
-      icon: Code,
-      color: 'assessment-blue',
-      questions: [
-        {
-          id: 'computer_basics',
-          question: 'What does CPU stand for?',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Central Processing Unit', correct: true },
-            { value: 'wrong1', label: 'Computer Personal Unit' },
-            { value: 'wrong2', label: 'Central Program Unit' },
-            { value: 'wrong3', label: 'Computer Processing User' }
-          ]
-        },
-        {
-          id: 'internet_safety',
-          question: 'Which of these is the SAFEST way to create a password?',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Use a mix of letters, numbers, and symbols that only you know', correct: true },
-            { value: 'wrong1', label: 'Use your birthday and name' },
-            { value: 'wrong2', label: 'Use the same password for all accounts' },
-            { value: 'wrong3', label: 'Use simple words like "password123"' }
-          ]
-        },
-        {
-          id: 'software_types',
-          question: 'Microsoft Word is an example of what type of software?',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Application software', correct: true },
-            { value: 'wrong1', label: 'System software' },
-            { value: 'wrong2', label: 'Hardware' },
-            { value: 'wrong3', label: 'Programming language' }
-          ]
-        },
-        {
-          id: 'digital_citizenship',
-          question: 'What should you do if you encounter cyberbullying online?',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Report it to a trusted adult and block the bully', correct: true },
-            { value: 'wrong1', label: 'Respond with mean comments back' },
-            { value: 'wrong2', label: 'Ignore it completely and do nothing' },
-            { value: 'wrong3', label: 'Share the bullying content with friends' }
-          ]
-        }
-      ]
-    },
-
-    // Performing and Visual Arts Assessment
-    {
-      id: 'performing_visual_arts',
-      title: 'Performing & Visual Arts Assessment',
-      subtitle: 'Grade 7 Level Arts',
-      icon: Lightbulb,
-      color: 'assessment-pink',
-      questions: [
-        {
-          id: 'color_theory',
-          question: 'What are the three primary colors?',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Red, Blue, Yellow', correct: true },
-            { value: 'wrong1', label: 'Red, Green, Blue' },
-            { value: 'wrong2', label: 'Yellow, Orange, Purple' },
-            { value: 'wrong3', label: 'Black, White, Gray' }
-          ]
-        },
-        {
-          id: 'music_basics',
-          question: 'How many beats are in a measure of 4/4 time?',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Four beats', correct: true },
-            { value: 'wrong1', label: 'Three beats' },
-            { value: 'wrong2', label: 'Two beats' },
-            { value: 'wrong3', label: 'Eight beats' }
-          ]
-        },
-        {
-          id: 'ethiopian_arts',
-          question: 'Traditional Ethiopian church paintings often feature:',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Religious scenes with bright colors and symbolic figures', correct: true },
-            { value: 'wrong1', label: 'Abstract geometric patterns only' },
-            { value: 'wrong2', label: 'Realistic portraits of everyday people' },
-            { value: 'wrong3', label: 'Modern cityscapes' }
-          ]
-        },
-        {
-          id: 'drama_elements',
-          question: 'In theater, what do we call the written text of a play?',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Script', correct: true },
-            { value: 'wrong1', label: 'Stage' },
-            { value: 'wrong2', label: 'Props' },
-            { value: 'wrong3', label: 'Costume' }
-          ]
-        }
-      ]
-    },
-
-    // Career and Technical Education Assessment
-    {
-      id: 'career_technical_education',
-      title: 'Career & Technical Education Assessment',
-      subtitle: 'Grade 7 Level Career Skills',
-      icon: Briefcase,
-      color: 'assessment-orange',
-      questions: [
-        {
-          id: 'problem_solving',
-          question: 'When facing a complex problem at work or school, what\'s the best first step?',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Break the problem down into smaller, manageable parts', correct: true },
-            { value: 'wrong1', label: 'Ask someone else to solve it for you' },
-            { value: 'wrong2', label: 'Guess at a solution and try it immediately' },
-            { value: 'wrong3', label: 'Wait for the problem to solve itself' }
-          ]
-        },
-        {
-          id: 'teamwork',
-          question: 'In a group project, if you disagree with a teammate\'s idea, you should:',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Listen respectfully and suggest alternatives with reasons', correct: true },
-            { value: 'wrong1', label: 'Tell them their idea is wrong immediately' },
-            { value: 'wrong2', label: 'Stay quiet and go along with it' },
-            { value: 'wrong3', label: 'Do the project your own way without telling them' }
-          ]
-        },
-        {
-          id: 'time_management',
-          question: 'You have three assignments due this week. What\'s the best approach?',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Make a schedule, prioritize by due date and importance', correct: true },
-            { value: 'wrong1', label: 'Do the easiest one first and hope for the best' },
-            { value: 'wrong2', label: 'Wait until the last minute to start all three' },
-            { value: 'wrong3', label: 'Ask for extensions on all assignments' }
-          ]
-        },
-        {
-          id: 'communication',
-          question: 'When giving a presentation, eye contact helps you:',
-          type: 'choice',
-          options: [
-            { value: 'correct', label: 'Connect with your audience and appear more confident', correct: true },
-            { value: 'wrong1', label: 'Remember what to say next' },
-            { value: 'wrong2', label: 'Read your notes better' },
-            { value: 'wrong3', label: 'Finish the presentation faster' }
-          ]
-        }
-      ]
-    },
-
-    // SUMMARY SLIDE - Academic Assessments Complete
-    {
-      id: 'academic_summary',
-      title: 'Academic Assessment Complete',
-      subtitle: 'Your Academic Strengths Summary',
-      icon: Award,
-      color: 'assessment-teal',
-      type: 'summary',
-      content: {
-        title: 'Great work on the academic assessments!',
-        description: 'We\'ve evaluated your skills across all major subject areas. Now let\'s explore your personality traits to find careers that match both your abilities and your natural preferences.',
-        nextSection: 'Next: Personality Assessment',
-        stats: true
-      }
-    },
-
-    // Big 5 Personality Assessments
-    {
-      id: 'openness',
-      title: 'Intellectual Curiosity',
-      subtitle: 'Big 5: Openness to Experience',
-      icon: Lightbulb,
-      color: 'personality-openness',
-      questions: [
-        {
-          id: 'new_ideas',
-          question: 'I am always curious about how things work.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'abstract_thinking',
-          question: 'I enjoy thinking about abstract concepts and theories.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'creativity',
-          question: 'I often come up with creative solutions to problems.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'learning_appetite',
-          question: 'I actively seek out new learning experiences.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'artistic_appreciation',
-          question: 'I have a strong appreciation for art, music, or literature.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        }
-      ]
-    },
-    {
-      id: 'conscientiousness',
-      title: 'Work Style & Organization',
-      subtitle: 'Big 5: Conscientiousness',
-      icon: Award,
-      color: 'personality-conscientiousness',
-      questions: [
-        {
-          id: 'organization',
-          question: 'I keep my workspace and materials well-organized.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'persistence',
-          question: 'I finish projects even when they become difficult or boring.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'planning',
-          question: 'I prefer to plan my work in advance rather than improvise.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'deadlines',
-          question: 'I always meet deadlines and rarely procrastinate.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'attention_detail',
-          question: 'I pay careful attention to details in my work.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        }
-      ]
-    },
-    {
-      id: 'extraversion',
-      title: 'Social Energy & Leadership',
-      subtitle: 'Big 5: Extraversion',
-      icon: Users,
-      color: 'personality-extraversion',
-      questions: [
-        {
-          id: 'social_energy',
-          question: 'I feel energized after spending time with groups of people.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'leadership',
-          question: 'I naturally take charge in group situations.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'public_speaking',
-          question: 'I enjoy presenting my ideas to large groups.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'networking',
-          question: 'I easily start conversations with strangers.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'assertiveness',
-          question: 'I assertively express my opinions and ideas.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        }
-      ]
-    },
-    {
-      id: 'agreeableness',
-      title: 'Collaboration & Empathy',
-      subtitle: 'Big 5: Agreeableness',
-      icon: Heart,
-      color: 'personality-agreeableness',
-      questions: [
-        {
-          id: 'cooperation',
-          question: 'I prefer collaborative work over competition.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'empathy',
-          question: 'I can easily sense when others are upset or stressed.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'helping',
-          question: 'I go out of my way to help others, even when it\'s inconvenient.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'conflict_resolution',
-          question: 'I work hard to resolve conflicts and find win-win solutions.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        },
-        {
-          id: 'trust',
-          question: 'I generally trust that people have good intentions.',
-          type: 'likert',
-          options: [
-            { value: 1, label: 'Strongly Disagree' },
-            { value: 2, label: 'Disagree' },
-            { value: 3, label: 'Neutral' },
-            { value: 4, label: 'Agree' },
-            { value: 5, label: 'Strongly Agree' }
-          ]
-        }
-      ]
-    },
-    {
-      id: 'neuroticism',
-      title: 'Emotional Resilience',
-      subtitle: 'Big 5: Emotional Stability',
-      icon: Brain,
-      color: 'personality-emotional',
-      questions: [
-        {
-          id: 'stress_management',
-          question: 'I remain calm under pressure and tight deadlines.',
-          type: 'likert',
-          options: [
-            { value: 5, label: 'Strongly Agree' },
-            { value: 4, label: 'Agree' },
-            { value: 3, label: 'Neutral' },
-            { value: 2, label: 'Disagree' },
-            { value: 1, label: 'Strongly Disagree' }
-          ]
-        },
-        {
-          id: 'emotional_stability',
-          question: 'My mood stays relatively stable throughout the day.',
-          type: 'likert',
-          options: [
-            { value: 5, label: 'Strongly Agree' },
-            { value: 4, label: 'Agree' },
-            { value: 3, label: 'Neutral' },
-            { value: 2, label: 'Disagree' },
-            { value: 1, label: 'Strongly Disagree' }
-          ]
-        },
-        {
-          id: 'confidence',
-          question: 'I feel confident in my abilities to handle challenges.',
-          type: 'likert',
-          options: [
-            { value: 5, label: 'Strongly Agree' },
-            { value: 4, label: 'Agree' },
-            { value: 3, label: 'Neutral' },
-            { value: 2, label: 'Disagree' },
-            { value: 1, label: 'Strongly Disagree' }
-          ]
-        },
-        {
-          id: 'adaptability',
-          question: 'I adapt quickly when plans change unexpectedly.',
-          type: 'likert',
-          options: [
-            { value: 5, label: 'Strongly Agree' },
-            { value: 4, label: 'Agree' },
-            { value: 3, label: 'Neutral' },
-            { value: 2, label: 'Disagree' },
-            { value: 1, label: 'Strongly Disagree' }
-          ]
-        },
-        {
-          id: 'optimism',
-          question: 'I generally expect positive outcomes from situations.',
-          type: 'likert',
-          options: [
-            { value: 5, label: 'Strongly Agree' },
-            { value: 4, label: 'Agree' },
-            { value: 3, label: 'Neutral' },
-            { value: 2, label: 'Disagree' },
-            { value: 1, label: 'Strongly Disagree' }
-          ]
-        }
-      ]
-    },
-
-    // SUMMARY SLIDE - Personality Assessment Complete  
-    {
-      id: 'personality_summary',
-      title: 'Personality Assessment Complete',
-      subtitle: 'Your Personality Profile Summary',
-      icon: Brain,
-      color: 'personality-openness',
-      type: 'summary',
-      content: {
-        title: 'Great! We now understand your personality.',
-        description: 'We\'ve assessed your Big 5 personality traits. Now let\'s explore your career values and interests to complete your profile.',
-        nextSection: 'Final Section: Career Interests',
-        stats: true
-      }
-    },
-
-    // Career Interests Assessment
-    {
-      id: 'career_interests',
-      title: 'Career Values & Goals',
-      subtitle: 'What Motivates You',
-      icon: Target,
-      color: 'assessment-teal',
-      questions: [
-        {
-          id: 'work_values',
-          question: 'What matters most to you in a career? (Choose your top priority)',
-          type: 'choice',
-          options: [
-            { value: 'intellectual_challenge', label: 'Intellectual stimulation and complex problems' },
-            { value: 'helping_others', label: 'Making a positive impact on people\'s lives' },
-            { value: 'creativity', label: 'Creative expression and innovation' },
-            { value: 'financial_success', label: 'Financial security and high earning potential' },
-            { value: 'autonomy', label: 'Independence and flexible work arrangements' },
-            { value: 'recognition', label: 'Recognition and professional prestige' }
-          ]
-        },
-        {
-          id: 'impact_scale',
-          question: 'What scale of impact do you want to have?',
-          type: 'choice',
-          options: [
-            { value: 'individual', label: 'One-on-one: Directly helping individual people' },
-            { value: 'local', label: 'Community: Improving your local area' },
-            { value: 'organizational', label: 'Institutional: Changing how organizations work' },
-            { value: 'societal', label: 'Societal: Addressing broad social issues' },
-            { value: 'global', label: 'Global: Solving problems that affect humanity' }
-          ]
-        },
-        {
-          id: 'work_environment',
-          question: 'Where do you see yourself thriving?',
-          type: 'choice',
-          options: [
-            { value: 'lab', label: 'Research laboratory or clinical setting' },
-            { value: 'office', label: 'Corporate office with team collaboration' },
-            { value: 'field', label: 'Field work and data collection' },
-            { value: 'remote', label: 'Remote work with digital collaboration' },
-            { value: 'varied', label: 'Constantly changing locations and contexts' },
-            { value: 'entrepreneurial', label: 'Startup or entrepreneurial environment' }
-          ]
-        },
-        {
-          id: 'career_timeline',
-          question: 'How do you prefer to advance in your career?',
-          type: 'choice',
-          options: [
-            { value: 'fast_track', label: 'Quick advancement with high responsibility early on' },
-            { value: 'steady_climb', label: 'Steady, predictable progression over time' },
-            { value: 'expertise', label: 'Becoming a deep expert in a specific area' },
-            { value: 'diverse', label: 'Exploring different roles and industries' },
-            { value: 'entrepreneurial', label: 'Building something new or starting my own venture' }
-          ]
-        },
-        {
-          id: 'work_life_balance',
-          question: 'How important is work-life balance to you?',
-          type: 'choice',
-          options: [
-            { value: 'essential', label: 'Essential - I need clear boundaries between work and personal life' },
-            { value: 'important', label: 'Important - I want flexibility but can work harder when needed' },
-            { value: 'moderate', label: 'Moderate - I\'m willing to work long hours for meaningful work' },
-            { value: 'flexible', label: 'Flexible - I can adapt to what the job requires' },
-            { value: 'career_focused', label: 'Career-focused - I\'m willing to prioritize career growth' }
-          ]
-        }
-      ]
-    }
-  ];
   const currentPageObj = assessmentPages[currentPage];
 const pageResponses = responses[currentPageObj.id] || {};
   const currentQuestion = currentPageObj.questions[currentQuestionIndex];
-  useEffect(() => {
-    const key = `${currentPage}-${currentQuestionIndex}`;
-    if (
-      currentQuestion.type === 'choice' &&
-      Array.isArray(currentQuestion.options) &&
-      typeof currentQuestion.options[0]?.value === 'string'
-    ) {
-      setShuffledMap(prev => {
-        if (prev[key]) return prev;
-        // Only shuffle if all option values are strings
-        return { 
-          ...prev, 
-          [key]: currentQuestion.options.every(opt => typeof opt.value === 'string') 
-            ? shuffleArray(currentQuestion.options as { value: string; label: string; correct?: boolean }[]) 
-            : currentQuestion.options 
-        };
-      });
-    } else {
-      // Only set for non-choice questions if not already set
-      setShuffledMap(prev => {
-        if (prev[key]) return prev;
-        return { ...prev, [key]: currentQuestion.options };
-      });
-    }
-    // eslint-disable-next-line
-  }, [currentPage, currentQuestionIndex, currentQuestion]);
-
+const questionKey = `${currentPage}-${currentQuestionIndex}`;
+const displayOptions = shuffledOptionsMap[questionKey] || currentQuestion?.options || [];
   const key = `${currentPage}-${currentQuestionIndex}`;
-  const shuffledOptions = currentQuestion.type === 'choice' ? (shuffledMap[key] || []) : currentQuestion.options;
+  const shuffledOptions = currentQuestion.type === 'choice' ? (shuffledOptionsMap[key] || []) : currentQuestion.options;
 // end
-
+// const questionKey = `${currentPage}-${currentQuestionIndex}`;
+// const displayOptions = shuffledOptionsMap[questionKey] || currentQuestion?.options || [];
     const deeperQuestions = [
     {
       id: 'work_environment_detail',
@@ -1726,7 +1732,7 @@ if (currentPageObj.type === 'summary') {
                   </div>
                   <div className="text-lg font-semibold">Overall Academic Performance</div>
                   <div className="text-muted-foreground">
-                    {academicStats.overall.correct} out of {academicStats.overall.total} questions correct
+ {academicStats.overall.correct} out of {academicStats.overall.total} questions correct
                   </div>
                 </div>
               </div>
@@ -1811,9 +1817,9 @@ if (currentPageObj.type === 'summary') {
             <h3 className="text-lg font-medium text-center">{currentQuestion.question}</h3>
             
             <div className="space-y-3">
-              {(currentQuestion.type === 'choice' ? shuffledOptions : currentQuestion.options).map((option, index) => (
-                <Button
-                  key={index}
+{displayOptions.map((option, index) => (
+  <Button
+    key={`${option.value}-${index}`}  // Composite key for stability                <Button
                   variant={currentAnswer?.value === option.value ? "default" : "outline"}
                   className="w-full text-left h-auto p-4 justify-start"
                   onClick={() => handleAnswer(currentQuestion.id, option)}
