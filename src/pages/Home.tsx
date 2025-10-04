@@ -46,23 +46,23 @@ const CareerAssessment = () => {
           id: 'algebra_basic',
           question: 'Solve for x: 3x + 7 = 22',
           type: 'choice',
-          options: shuffleArray([
+          options: [
             { value: 'correct', label: 'x = 5', correct: true },
             { value: 'wrong1', label: 'x = 3' },
             { value: 'wrong2', label: 'x = 7' },
             { value: 'wrong3', label: 'x = 15' }
-          ])
+          ]
         },
         {
           id: 'percentage',
           question: 'If 60% of students in a class of 40 are girls, how many boys are in the class?',
           type: 'choice',
-          options: shuffleArray([
+          options: [
             { value: 'correct', label: '16 boys', correct: true },
             { value: 'wrong1', label: '24 boys' },
             { value: 'wrong2', label: '20 boys' },
             { value: 'wrong3', label: '14 boys' }
-          ])
+          ]
         }
       ]
     },
@@ -95,23 +95,23 @@ const CareerAssessment = () => {
           id: 'coffee_economics',
           question: 'A coffee farmer in Sidamo produces 1,200 kg of coffee beans per hectare. If the international price is $4.50/kg but local processing adds 30% value, what\'s the best strategy?',
           type: 'choice',
-          options: shuffleArray([
+          options: [
             { value: 'process_locally', label: 'Process locally: $4.50 × 1.30 = $5.85/kg (Higher profit per kg)', correct: true },
             { value: 'sell_raw', label: 'Sell raw beans at $4.50/kg (Quick cash)' },
             { value: 'store_and_wait', label: 'Store beans and wait for price increase' },
             { value: 'sell_half', label: 'Sell half raw, process half' }
-          ])
+          ]
         },
         {
           id: 'urban_planning',
           question: 'Addis Ababa needs a new light rail line. The city has 5 million people, 60% use public transport. If each train carries 300 people and runs every 10 minutes, how many trains are needed for rush hour?',
           type: 'choice',
-          options: shuffleArray([
+          options: [
             { value: 'calculate_demand', label: 'Calculate: 5M × 0.6 × 0.2 (rush hour) ÷ 300 = 2,000 passengers per direction', correct: true },
             { value: 'copy_other_cities', label: 'Copy the same system as other African cities' },
             { value: 'start_small', label: 'Start with 5 trains and expand later' },
             { value: 'use_buses', label: 'Use buses instead - cheaper and more flexible' }
-          ])
+          ]
         }
       ]
     },
@@ -129,23 +129,23 @@ const CareerAssessment = () => {
           id: 'altitude_science',
           question: 'You\'re a scientist studying why athletes from Ethiopian highlands excel in long-distance running. What\'s the most scientifically sound explanation?',
           type: 'choice',
-          options: shuffleArray([
+          options: [
             { value: 'altitude_adaptation', label: 'High altitude training increases red blood cell count and oxygen efficiency', correct: true },
             { value: 'genetic_only', label: 'It\'s purely genetic - Ethiopians are just naturally faster' },
             { value: 'diet_based', label: 'Traditional Ethiopian diet provides special nutrients' },
             { value: 'cultural_only', label: 'Running culture and motivation are the only factors' }
-          ])
+          ]
         },
         {
           id: 'medical_innovation',
           question: 'Ethiopia has a shortage of doctors in rural areas. As a biomedical engineer, what\'s your most innovative solution?',
           type: 'choice',
-          options: shuffleArray([
+          options: [
             { value: 'telemedicine_ai', label: 'Develop AI-powered diagnostic tools that health workers can use remotely', correct: true },
             { value: 'train_more_doctors', label: 'Simply train more doctors and force them to work in rural areas' },
             { value: 'import_doctors', label: 'Import doctors from other countries' },
             { value: 'ignore_problem', label: 'Focus on urban healthcare first, rural areas can wait' }
-          ])
+          ]
         }
       ]
     },
@@ -178,23 +178,23 @@ const CareerAssessment = () => {
           id: 'federalism_challenge',
           question: 'Ethiopia\'s federal system has 11 regional states. A policy works well in Tigray but fails in Somali region. As a policy analyst, what\'s your approach?',
           type: 'choice',
-          options: shuffleArray([
+          options: [
             { value: 'contextualize_policy', label: 'Study cultural, economic, and geographic differences to adapt the policy', correct: true },
             { value: 'force_uniformity', label: 'Enforce the same policy everywhere - uniformity is important' },
             { value: 'abandon_policy', label: 'If it doesn\'t work everywhere, abandon the policy completely' },
             { value: 'blame_regions', label: 'The regions that failed are just not implementing it correctly' }
-          ])
+          ]
         },
         {
           id: 'diaspora_economics',
           question: 'Ethiopian diaspora sends $5 billion in remittances annually. How can this be leveraged for maximum development impact?',
           type: 'choice',
-          options: shuffleArray([
+          options: [
             { value: 'investment_channels', label: 'Create investment channels for diaspora to fund infrastructure and businesses', correct: true },
             { value: 'just_consumption', label: 'Let families use the money for consumption - it helps the economy anyway' },
             { value: 'government_takes_cut', label: 'Government should tax remittances heavily to fund projects' },
             { value: 'discourage_migration', label: 'Focus on stopping people from leaving instead' }
-          ])
+          ]
         }
       ]
     },
@@ -212,23 +212,23 @@ const CareerAssessment = () => {
           id: 'climate_agriculture',
           question: 'Climate change is affecting rainfall patterns in Ethiopian agriculture. Coffee yields in some areas are dropping 15% per year. You\'re advising the government. What\'s your comprehensive solution?',
           type: 'choice',
-          options: shuffleArray([
+          options: [
             { value: 'integrated_approach', label: 'Combine drought-resistant varieties, farmer education, climate data systems, and alternative livelihood training', correct: true },
             { value: 'technology_only', label: 'Just introduce new drought-resistant coffee varieties' },
             { value: 'abandon_coffee', label: 'Tell farmers to stop growing coffee and switch to other crops' },
             { value: 'wait_and_see', label: 'Wait for international aid and climate finance' }
-          ])
+          ]
         },
         {
           id: 'digital_divide',
           question: 'Only 20% of Ethiopians have internet access, mostly in cities. As a tech policy advisor, how do you bridge this divide sustainably?',
           type: 'choice',
-          options: shuffleArray([
+          options: [
             { value: 'leapfrog_strategy', label: 'Satellite + mobile-first strategy + local language content + digital literacy programs', correct: true },
             { value: 'build_cables', label: 'Build expensive fiber optic cables to every village' },
             { value: 'ignore_rural', label: 'Focus on cities first - rural areas can wait 10-15 years' },
             { value: 'import_solution', label: 'Copy exactly what worked in other African countries' }
-          ])
+          ]
         }
       ]
     },
@@ -594,6 +594,24 @@ const CareerAssessment = () => {
     }
   ];
 
+const [shuffledOptionsMap] = useState(() => {
+    const map = {};
+    assessmentPages.forEach((page, pageIdx) => {
+      if (page.questions) {
+        page.questions.forEach((question, qIdx) => {
+          const key = `${pageIdx}-${qIdx}`;
+          // Only shuffle academic questions (those with a 'correct' property)
+          if (question.type === 'choice' && question.options.some(opt => opt.correct !== undefined)) {
+            map[key] = shuffleArray([...question.options]);
+          } else {
+            // Keep personality/career questions in original order
+            map[key] = question.options;
+          }
+        });
+      }
+    });
+    return map;
+  });
   const careerRecommendations = {
     'research_innovator': {
       title: 'Research & Innovation Leader',
@@ -1039,6 +1057,9 @@ const CareerAssessment = () => {
   const pageResponses = responses[currentPageObj.id] || {};
   const currentAnswer = pageResponses[currentQuestion.id];
   const Icon = currentPageObj.icon;
+  const questionKey = `${currentPage}-${currentQuestionIndex}`;
+const displayOptions = shuffledOptionsMap[questionKey] || currentQuestion.options;
+
   const isPersonalityQuestion = currentQuestion.type === 'likert';
   const isAcademicPage = currentPageObj.isAcademic === true;
 
@@ -1072,7 +1093,7 @@ const CareerAssessment = () => {
             <h3 className="text-lg font-medium text-center">{currentQuestion.question}</h3>
             
             <div className="space-y-3">
-              {currentQuestion.options.map((option, index) => (
+{displayOptions.map((option, index) => (
                 <Button
                   key={index}
                   variant={currentAnswer?.value === option.value ? "default" : "outline"}

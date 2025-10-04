@@ -17,17 +17,45 @@ import drMichaelFoster from '@/assets/dr-michael-foster.jpg';
 
 const CareerAssessment = () => {
   const navigate = useNavigate();
-    const [currentPage, setCurrentPage] = useState(0);
-    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [responses, setResponses] = useState({});
-    const [results, setResults] = useState(null);
-    const [showingResults, setShowingResults] = useState(false);
-    const [big5Scores, setBig5Scores] = useState(null);
-    const [showDeeperAssessment, setShowDeeperAssessment] = useState(false);
-    const [satisfiedWithResults, setSatisfiedWithResults] = useState(null);
-
+  const [currentPage, setCurrentPage] = useState(0);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [responses, setResponses] = useState({});
+  const [results, setResults] = useState(null);
+  const [showingResults, setShowingResults] = useState(false);
+  const [big5Scores, setBig5Scores] = useState(null);
+  const [showDeeperAssessment, setShowDeeperAssessment] = useState(false);
+  const [satisfiedWithResults, setSatisfiedWithResults] = useState(null);
+  const [shuffledOptionsMap, setShuffledOptionsMap] = useState<{ [key: string]: any[] }>({});
+useEffect(() => {
+  if (Object.keys(shuffledOptionsMap).length === 0) {
+    const map: { [key: string]: any[] } = {};
+    assessmentPages.forEach((page, pageIdx) => {
+      if (page.questions) {
+        page.questions.forEach((question, qIdx) => {
+          const key = `${pageIdx}-${qIdx}`;
+          const hasCorrectProperty = question.options?.some((opt: any) => 'correct' in opt);
+          
+          if (question.type === 'choice' && hasCorrectProperty) {
+            map[key] = shuffleArray([...question.options]);
+          } else {
+            map[key] = question.options;
+          }
+        });
+      }
+    });
+    setShuffledOptionsMap(map);
+  }
+}, []);
+      function shuffleArray<T>(array: T[]): T[] {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
     // Memoize assessmentPages if it must be inside the component
-const assessmentPages = useMemo(() => [
+const assessmentPages = [
   // Mathematics Assessment
   {
     id: 'mathematics',
@@ -952,88 +980,7 @@ const assessmentPages = useMemo(() => [
       }
     ]
   }
-], []);
-const [shuffledOptionsMap] = useState(() => {
-  const map: { [key: string]: any[] } = {};
-  assessmentPages.forEach((page, pageIdx) => {
-    if (page.questions) {
-      page.questions.forEach((question, qIdx) => {
-        const key = `${pageIdx}-${qIdx}`;
-        if (question.type === 'choice' && question.options[0]?.correct !== undefined) {
-          // Only shuffle academic questions (those with correct answers)
-          map[key] = shuffleArray(question.options);
-        } else {
-          // Keep personality/career questions in original order
-          map[key] = question.options;
-        }
-      });
-    }
-  });
-  return map;
-});
-  // Utility to shuffle an array (Fisher-Yates)
-function shuffleArray<T>(array: T[]): T[] {
-  const arr = [...array];
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
-
-// Initialize shuffledOptionsMap ONCE
-// const [shuffledOptionsMap] = useState(() => {
-//   const map: { [key: string]: any[] } = {};
-//   assessmentPages.forEach((page, pageIdx) => {
-//     if (page.questions) {
-//       page.questions.forEach((question, qIdx) => {
-//         const key = `${pageIdx}-${qIdx}`;
-//         if (question.type === 'choice' && question.options[0]?.correct !== undefined) {
-//           // Only shuffle academic questions (those with correct answers)
-//           map[key] = shuffleArray(question.options);
-//         } else {
-//           // Keep personality/career questions in original order
-//           map[key] = question.options;
-//         }
-//       });
-//     }
-//   });
-//   return map;
-// });
-  // Declare currentPageObj and currentQuestion before using them
-  // const currentPageObj = assessmentPages[currentPage];
-  // const pageResponses = responses[currentPageObj.id] || {};
-  // const currentQuestion = currentPageObj.questions[currentQuestionIndex];
-
-  // useEffect(() => {
-  //   const key = `${currentPage}-${currentQuestionIndex}`;
-  //   if (
-  //     currentQuestion.type === 'choice' &&
-  //     Array.isArray(currentQuestion.options) &&
-  //     typeof currentQuestion.options[0]?.value === 'string'
-  //   ) {
-  //     setShuffledMap(prev => {
-  //       if (prev[key]) return prev;
-  //       // Only shuffle if all option values are strings
-  //       return { 
-  //         ...prev, 
-  //         [key]: currentQuestion.options.every(opt => typeof opt.value === 'string') 
-  //           ? shuffleArray(currentQuestion.options as { value: string; label: string; correct?: boolean }[]) 
-  //           : currentQuestion.options 
-  //       };
-  //     });
-  //   } else {
-  //     // Only set for non-choice questions if not already set
-  //     setShuffledMap(prev => {
-  //       if (prev[key]) return prev;
-  //       return { ...prev, [key]: currentQuestion.options };
-  //     });
-  //   }
-  //   // eslint-disable-next-line
-  // }, [currentPage, currentQuestionIndex, currentQuestion]);
-
-  // const key = `${currentPage}-${currentQuestionIndex}`;
-  // const shuffledOptions = currentQuestion.type === 'choice' ? (shuffledMap[key] || []) : currentQuestion.options;
+];
 
   const professionalsData = [
     {
@@ -1091,12 +1038,8 @@ const pageResponses = responses[currentPageObj.id] || {};
   const currentQuestion = currentPageObj.questions[currentQuestionIndex];
 const questionKey = `${currentPage}-${currentQuestionIndex}`;
 const displayOptions = shuffledOptionsMap[questionKey] || currentQuestion?.options || [];
-  const key = `${currentPage}-${currentQuestionIndex}`;
-  const shuffledOptions = currentQuestion.type === 'choice' ? (shuffledOptionsMap[key] || []) : currentQuestion.options;
-// end
-// const questionKey = `${currentPage}-${currentQuestionIndex}`;
-// const displayOptions = shuffledOptionsMap[questionKey] || currentQuestion?.options || [];
-    const deeperQuestions = [
+  
+const deeperQuestions = [
     {
       id: 'work_environment_detail',
       question: 'Based on your responses, you seem to thrive in collaborative environments. Which specific setting appeals most to you?',
@@ -1327,30 +1270,37 @@ const displayOptions = shuffledOptionsMap[questionKey] || currentQuestion?.optio
   };
 
   const handleAnswer = (questionId: string, answer: any, pageId: string | null = null) => {
-    const targetPageId = pageId || assessmentPages[currentPage].id;
-    
-    // Check if answer already exists (prevent changing answers)
-    const existingAnswer = responses[targetPageId]?.[questionId];
-    if (existingAnswer) {
-      return; // Don't allow changing answers
-    }
-    
-    // For academic questions, track if answer is correct
-    const page = assessmentPages.find(p => p.id === targetPageId);
-    const question = page?.questions.find(q => q.id === questionId);
-    const isCorrect = (question?.options.find(opt => opt.value === answer.value) as any)?.correct === true;
-    
-    setResponses((prev: any) => ({
-      ...prev,
-      [targetPageId]: {
-        ...prev[targetPageId],
-        [questionId]: {
-          ...answer,
-          isCorrect: isCorrect
-        }
+  const targetPageId = pageId || assessmentPages[currentPage].id;
+  
+  // Determine if this is an academic question (has correct/wrong answers)
+  const page = assessmentPages.find(p => p.id === targetPageId);
+  const question = page?.questions?.find(q => q.id === questionId);
+  const isAcademicQuestion = question?.options?.some((opt: any) => 'correct' in opt);
+  
+  // Check if answer already exists
+  const existingAnswer = responses[targetPageId]?.[questionId];
+  
+  // ONLY prevent changing answers for ACADEMIC questions
+  if (existingAnswer && isAcademicQuestion) {
+    return; // Don't allow changing academic answers
+  }
+  
+  // For academic questions, track if answer is correct
+  const isCorrect = isAcademicQuestion 
+    ? (answer as any).correct === true
+    : undefined;
+  
+  setResponses((prev: any) => ({
+    ...prev,
+    [targetPageId]: {
+      ...prev[targetPageId],
+      [questionId]: {
+        ...answer,
+        isCorrect: isCorrect
       }
-    }));
-  };
+    }
+  }));
+};
   // Use the single declaration of currentPageObj and currentQuestion above
   const currentAnswer = pageResponses[currentQuestion.id];
   const Icon = currentPageObj.icon;
@@ -1673,7 +1623,6 @@ const displayOptions = shuffledOptionsMap[questionKey] || currentQuestion?.optio
       </div>
     );
   }
-// ADD this right before the existing question rendering logic:
 
 // Handle summary slides
 if (currentPageObj.type === 'summary') {
@@ -1782,10 +1731,6 @@ if (currentPageObj.type === 'summary') {
     </div>
   );
 }
-
-// THEN the existing question rendering logic continues here...
-  // Assessment questions view
-  // (Removed duplicate declarations here)
 
   return (
     <div className="min-h-screen bg-gradient-primary">
