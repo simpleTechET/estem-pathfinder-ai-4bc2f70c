@@ -69,10 +69,10 @@ const assessmentPages = [
         question: 'If 60% of students in a class of 40 are girls, how many boys are in the class?',
         type: 'choice',
         options: [
-          { value: 'correct', label: '16 boys', correct: true },
-          { value: 'wrong1', label: '24 boys' },
-          { value: 'wrong2', label: '20 boys' },
-          { value: 'wrong3', label: '14 boys' }
+          { value: 'wrong1', label: '24 students' },
+          { value: 'correct', label: '16 students', correct: true },
+          { value: 'wrong2', label: '20 students' },
+          { value: 'wrong3', label: '14 students' }
         ]
       },
       {
@@ -80,10 +80,65 @@ const assessmentPages = [
         question: 'What is the area of a rectangle with length 8 cm and width 5 cm?',
         type: 'choice',
         options: [
-          { value: 'correct', label: '40 cm²', correct: true },
           { value: 'wrong1', label: '26 cm²' },
           { value: 'wrong2', label: '13 cm²' },
+          { value: 'correct', label: '40 cm²', correct: true },
           { value: 'wrong3', label: '80 cm²' }
+        ]
+      },
+      {
+        id: 'fractions',
+        question: 'Simplify the fraction: 18/24',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: '3/4', correct: true },
+          { value: 'wrong1', label: '9/12' },
+          { value: 'wrong2', label: '6/8' },
+          { value: 'wrong3', label: '2/3' }
+        ]
+      },
+      {
+        id: 'word_problem',
+        question: 'A school bus travels 45 km in one hour. How far will it travel in 3.5 hours at the same speed?',
+        type: 'choice',
+        options: [
+          { value: 'wrong1', label: '135.5 km' },
+          { value: 'wrong2', label: '140 km' },
+          { value: 'correct', label: '157.5 km', correct: true },
+          { value: 'wrong3', label: '148.5 km' }
+        ]
+      },
+      {
+        id: 'percentages',
+        question: 'A shirt originally costs 500 Birr. During a sale, it is discounted by 20%. What is the sale price?',
+        type: 'choice',
+        options: [
+          { value: 'wrong1', label: '480 Birr' },
+          { value: 'correct', label: '400 Birr', correct: true },
+          { value: 'wrong2', label: '450 Birr' },
+          { value: 'wrong3', label: '420 Birr' }
+        ]
+      },
+      {
+        id: 'ratio',
+        question: 'The ratio of boys to girls in a school is 3:5. If there are 240 students in total, how many are girls?',
+        type: 'choice',
+        options: [
+          { value: 'wrong1', label: '120 girls' },
+          { value: 'wrong2', label: '144 girls' },
+          { value: 'wrong3', label: '160 girls' },
+          { value: 'correct', label: '150 girls', correct: true }
+        ]
+      },
+      {
+        id: 'equations',
+        question: 'Solve for x: 3x + 7 = 22',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'x = 5', correct: true },
+          { value: 'wrong1', label: 'x = 7' },
+          { value: 'wrong2', label: 'x = 6' },
+          { value: 'wrong3', label: 'x = 4' }
         ]
       }
     ]
@@ -102,10 +157,10 @@ const assessmentPages = [
         question: 'What is the correct order of steps in the scientific method?',
         type: 'choice',
         options: [
-          { value: 'correct', label: 'Question → Hypothesis → Experiment → Analysis → Conclusion', correct: true },
-          { value: 'wrong1', label: 'Hypothesis → Question → Experiment → Conclusion → Analysis' },
-          { value: 'wrong2', label: 'Experiment → Question → Hypothesis → Analysis → Conclusion' },
-          { value: 'wrong3', label: 'Question → Experiment → Hypothesis → Conclusion → Analysis' }
+          { value: 'wrong1', label: 'Hypothesis → Experiment → Question → Analysis' },
+          { value: 'correct', label: 'Question → Hypothesis → Experiment → Analysis', correct: true },
+          { value: 'wrong2', label: 'Experiment → Analysis → Question → Hypothesis' },
+          { value: 'wrong3', label: 'Question → Analysis → Experiment → Hypothesis' }
         ]
       },
       {
@@ -113,10 +168,10 @@ const assessmentPages = [
         question: 'When ice melts into water, this is an example of:',
         type: 'choice',
         options: [
-          { value: 'correct', label: 'A physical change', correct: true },
-          { value: 'wrong1', label: 'A chemical change' },
-          { value: 'wrong2', label: 'A nuclear reaction' },
-          { value: 'wrong3', label: 'An irreversible change' }
+          { value: 'wrong1', label: 'Chemical reaction' },
+          { value: 'correct', label: 'Physical change', correct: true },
+          { value: 'wrong2', label: 'Nuclear process' },
+          { value: 'wrong3', label: 'Biological change' }
         ]
       },
       {
@@ -124,9 +179,9 @@ const assessmentPages = [
         question: 'In a food chain, what role do plants typically play?',
         type: 'choice',
         options: [
-          { value: 'correct', label: 'Primary producers', correct: true },
           { value: 'wrong1', label: 'Primary consumers' },
           { value: 'wrong2', label: 'Secondary consumers' },
+          { value: 'correct', label: 'Primary producers', correct: true },
           { value: 'wrong3', label: 'Decomposers' }
         ]
       },
@@ -135,10 +190,54 @@ const assessmentPages = [
         question: 'Which form of energy is stored in food?',
         type: 'choice',
         options: [
-          { value: 'correct', label: 'Chemical energy', correct: true },
           { value: 'wrong1', label: 'Mechanical energy' },
           { value: 'wrong2', label: 'Electrical energy' },
-          { value: 'wrong3', label: 'Light energy' }
+          { value: 'correct', label: 'Chemical energy', correct: true },
+          { value: 'wrong3', label: 'Thermal energy' }
+        ]
+      },
+      {
+        id: 'water_cycle',
+        question: 'What process occurs when water vapor in the air turns into liquid water droplets?',
+        type: 'choice',
+        options: [
+          { value: 'wrong1', label: 'Evaporation' },
+          { value: 'correct', label: 'Condensation', correct: true },
+          { value: 'wrong2', label: 'Precipitation' },
+          { value: 'wrong3', label: 'Transpiration' }
+        ]
+      },
+      {
+        id: 'renewable_energy',
+        question: 'Which of these is a renewable energy source commonly used in Ethiopia?',
+        type: 'choice',
+        options: [
+          { value: 'wrong1', label: 'Natural gas' },
+          { value: 'wrong2', label: 'Coal power' },
+          { value: 'correct', label: 'Hydroelectric power', correct: true },
+          { value: 'wrong3', label: 'Petroleum' }
+        ]
+      },
+      {
+        id: 'simple_machines',
+        question: 'A seesaw at a playground is an example of which simple machine?',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Lever', correct: true },
+          { value: 'wrong1', label: 'Pulley' },
+          { value: 'wrong2', label: 'Wedge' },
+          { value: 'wrong3', label: 'Screw' }
+        ]
+      },
+      {
+        id: 'climate',
+        question: 'Ethiopia experiences different climate zones primarily because of:',
+        type: 'choice',
+        options: [
+          { value: 'wrong1', label: 'Ocean currents' },
+          { value: 'correct', label: 'Altitude variations', correct: true },
+          { value: 'wrong2', label: 'Desert conditions' },
+          { value: 'wrong3', label: 'Polar winds' }
         ]
       }
     ]
@@ -157,10 +256,10 @@ const assessmentPages = [
         question: 'What made the Battle of Adwa (1896) historically significant for Ethiopia and Africa?',
         type: 'choice',
         options: [
-          { value: 'correct', label: 'Ethiopia defeated Italy, proving African nations could resist European colonization', correct: true },
-          { value: 'wrong1', label: 'It was the first battle fought in the mountains' },
-          { value: 'wrong2', label: 'It established trade routes with Europe' },
-          { value: 'wrong3', label: 'It created the modern Ethiopian calendar' }
+          { value: 'wrong1', label: 'It established new trade agreements with Italy' },
+          { value: 'correct', label: 'Ethiopia defeated colonial forces, inspiring African resistance', correct: true },
+          { value: 'wrong2', label: 'It introduced European military tactics to Africa' },
+          { value: 'wrong3', label: 'It created the modern Ethiopian calendar system' }
         ]
       },
       {
@@ -168,10 +267,10 @@ const assessmentPages = [
         question: 'Which river is considered the source of the Blue Nile?',
         type: 'choice',
         options: [
-          { value: 'correct', label: 'Lake Tana', correct: true },
           { value: 'wrong1', label: 'Lake Victoria' },
+          { value: 'correct', label: 'Lake Tana', correct: true },
           { value: 'wrong2', label: 'Red Sea' },
-          { value: 'wrong3', label: 'Indian Ocean' }
+          { value: 'wrong3', label: 'Lake Turkana' }
         ]
       },
       {
@@ -179,10 +278,10 @@ const assessmentPages = [
         question: 'What type of government system does Ethiopia currently have?',
         type: 'choice',
         options: [
-          { value: 'correct', label: 'Federal parliamentary republic', correct: true },
           { value: 'wrong1', label: 'Constitutional monarchy' },
           { value: 'wrong2', label: 'Presidential republic' },
-          { value: 'wrong3', label: 'Military dictatorship' }
+          { value: 'correct', label: 'Federal parliamentary republic', correct: true },
+          { value: 'wrong3', label: 'Unitary state' }
         ]
       },
       {
@@ -192,8 +291,52 @@ const assessmentPages = [
         options: [
           { value: 'correct', label: 'Ge\'ez script', correct: true },
           { value: 'wrong1', label: 'Arabic script' },
-          { value: 'wrong2', label: 'Latin script' },
-          { value: 'wrong3', label: 'Hieroglyphics' }
+          { value: 'wrong2', label: 'Latin alphabet' },
+          { value: 'wrong3', label: 'Cyrillic script' }
+        ]
+      },
+      {
+        id: 'economics',
+        question: 'Coffee is one of Ethiopia\'s main exports. What percentage of the world\'s coffee genetic diversity originates from Ethiopia?',
+        type: 'choice',
+        options: [
+          { value: 'wrong1', label: 'About 25% of varieties' },
+          { value: 'wrong2', label: 'About 50% of varieties' },
+          { value: 'correct', label: 'About 95% of varieties', correct: true },
+          { value: 'wrong3', label: 'About 70% of varieties' }
+        ]
+      },
+      {
+        id: 'regional_diversity',
+        question: 'How many regional states does Ethiopia have in its federal system?',
+        type: 'choice',
+        options: [
+          { value: 'wrong1', label: '8 states' },
+          { value: 'correct', label: '11 states', correct: true },
+          { value: 'wrong2', label: '9 states' },
+          { value: 'wrong3', label: '12 states' }
+        ]
+      },
+      {
+        id: 'ancient_kingdoms',
+        question: 'The ancient Kingdom of Aksum was known for its:',
+        type: 'choice',
+        options: [
+          { value: 'wrong1', label: 'Pyramid construction' },
+          { value: 'correct', label: 'Tall stone obelisks', correct: true },
+          { value: 'wrong2', label: 'Hanging gardens' },
+          { value: 'wrong3', label: 'Great wall' }
+        ]
+      },
+      {
+        id: 'timkeeping',
+        question: 'The Ethiopian calendar is unique because it:',
+        type: 'choice',
+        options: [
+          { value: 'wrong1', label: 'Has 10 months per year' },
+          { value: 'wrong2', label: 'Follows lunar cycles only' },
+          { value: 'correct', label: 'Is 7-8 years behind the Gregorian calendar', correct: true },
+          { value: 'wrong3', label: 'Has 365 days exactly' }
         ]
       }
     ]
@@ -212,10 +355,10 @@ const assessmentPages = [
         question: 'A ball is thrown straight up in the air. At the highest point of its path, what can you say about its velocity and acceleration?',
         type: 'choice',
         options: [
-          { value: 'correct', label: 'Velocity is zero, acceleration is downward', correct: true },
-          { value: 'wrong1', label: 'Both velocity and acceleration are zero' },
-          { value: 'wrong2', label: 'Velocity is upward, acceleration is zero' },
-          { value: 'wrong3', label: 'Both velocity and acceleration are downward' }
+          { value: 'wrong1', label: 'Both are zero' },
+          { value: 'correct', label: 'Velocity zero, acceleration downward', correct: true },
+          { value: 'wrong2', label: 'Velocity upward, acceleration zero' },
+          { value: 'wrong3', label: 'Both are downward' }
         ]
       },
       {
@@ -223,10 +366,10 @@ const assessmentPages = [
         question: 'According to Newton\'s first law, an object at rest will:',
         type: 'choice',
         options: [
-          { value: 'correct', label: 'Stay at rest unless acted upon by an unbalanced force', correct: true },
-          { value: 'wrong1', label: 'Always start moving after some time' },
-          { value: 'wrong2', label: 'Move in a circular path' },
-          { value: 'wrong3', label: 'Accelerate automatically' }
+          { value: 'wrong1', label: 'Eventually start moving' },
+          { value: 'wrong2', label: 'Move in circles' },
+          { value: 'correct', label: 'Remain at rest without external force', correct: true },
+          { value: 'wrong3', label: 'Begin accelerating' }
         ]
       },
       {
@@ -234,10 +377,10 @@ const assessmentPages = [
         question: 'Which has more kinetic energy: a 2kg ball moving at 5 m/s or a 1kg ball moving at 8 m/s?',
         type: 'choice',
         options: [
-          { value: 'correct', label: '1kg ball at 8 m/s', correct: true },
           { value: 'wrong1', label: '2kg ball at 5 m/s' },
-          { value: 'wrong2', label: 'Both have the same kinetic energy' },
-          { value: 'wrong3', label: 'Cannot be determined' }
+          { value: 'correct', label: '1kg ball at 8 m/s', correct: true },
+          { value: 'wrong2', label: 'Same kinetic energy' },
+          { value: 'wrong3', label: 'Cannot determine' }
         ]
       },
       {
@@ -245,10 +388,54 @@ const assessmentPages = [
         question: 'When white light passes through a prism, it separates into different colors because:',
         type: 'choice',
         options: [
-          { value: 'correct', label: 'Different colors have different wavelengths and bend at different angles', correct: true },
-          { value: 'wrong1', label: 'The prism adds color to the light' },
-          { value: 'wrong2', label: 'Light always contains hidden colors' },
-          { value: 'wrong3', label: 'The prism creates new colors' }
+          { value: 'wrong1', label: 'The prism adds pigments' },
+          { value: 'wrong2', label: 'Air creates the colors' },
+          { value: 'correct', label: 'Different wavelengths bend differently', correct: true },
+          { value: 'wrong3', label: 'Glass creates colors' }
+        ]
+      },
+      {
+        id: 'electricity',
+        question: 'In a simple circuit, what happens if you add more batteries in series?',
+        type: 'choice',
+        options: [
+          { value: 'wrong1', label: 'Current stays the same' },
+          { value: 'correct', label: 'Voltage increases', correct: true },
+          { value: 'wrong2', label: 'Resistance increases' },
+          { value: 'wrong3', label: 'Voltage decreases' }
+        ]
+      },
+      {
+        id: 'sound',
+        question: 'Sound travels fastest through:',
+        type: 'choice',
+        options: [
+          { value: 'wrong1', label: 'Air' },
+          { value: 'wrong2', label: 'Water' },
+          { value: 'correct', label: 'Steel', correct: true },
+          { value: 'wrong3', label: 'Vacuum' }
+        ]
+      },
+      {
+        id: 'pressure',
+        question: 'Why do your ears pop when you go up a mountain?',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Air pressure decreases with altitude', correct: true },
+          { value: 'wrong1', label: 'Temperature changes affect hearing' },
+          { value: 'wrong2', label: 'Oxygen levels change suddenly' },
+          { value: 'wrong3', label: 'Gravity pulls on your eardrums' }
+        ]
+      },
+      {
+        id: 'magnetism',
+        question: 'Which metals are attracted to magnets?',
+        type: 'choice',
+        options: [
+          { value: 'wrong1', label: 'Copper and aluminum' },
+          { value: 'wrong2', label: 'Gold and silver' },
+          { value: 'correct', label: 'Iron and nickel', correct: true },
+          { value: 'wrong3', label: 'Brass and bronze' }
         ]
       }
     ]
@@ -267,10 +454,10 @@ const assessmentPages = [
         question: 'What is the smallest unit of a chemical element?',
         type: 'choice',
         options: [
-          { value: 'correct', label: 'Atom', correct: true },
           { value: 'wrong1', label: 'Molecule' },
+          { value: 'correct', label: 'Atom', correct: true },
           { value: 'wrong2', label: 'Compound' },
-          { value: 'wrong3', label: 'Cell' }
+          { value: 'wrong3', label: 'Electron' }
         ]
       },
       {
@@ -278,10 +465,10 @@ const assessmentPages = [
         question: 'Elements in the same column (group) of the periodic table have similar:',
         type: 'choice',
         options: [
+          { value: 'wrong1', label: 'Atomic masses' },
           { value: 'correct', label: 'Chemical properties', correct: true },
-          { value: 'wrong1', label: 'Atomic mass' },
-          { value: 'wrong2', label: 'Number of neutrons' },
-          { value: 'wrong3', label: 'Physical appearance' }
+          { value: 'wrong2', label: 'Neutron counts' },
+          { value: 'wrong3', label: 'Physical states' }
         ]
       },
       {
@@ -289,10 +476,10 @@ const assessmentPages = [
         question: 'In the chemical equation H₂ + Cl₂ → 2HCl, what type of reaction is this?',
         type: 'choice',
         options: [
-          { value: 'correct', label: 'Synthesis (combination) reaction', correct: true },
           { value: 'wrong1', label: 'Decomposition reaction' },
-          { value: 'wrong2', label: 'Single replacement reaction' },
-          { value: 'wrong3', label: 'Double replacement reaction' }
+          { value: 'wrong2', label: 'Replacement reaction' },
+          { value: 'correct', label: 'Synthesis reaction', correct: true },
+          { value: 'wrong3', label: 'Combustion reaction' }
         ]
       },
       {
@@ -301,9 +488,53 @@ const assessmentPages = [
         type: 'choice',
         options: [
           { value: 'correct', label: 'Acidic', correct: true },
-          { value: 'wrong1', label: 'Basic (alkaline)' },
+          { value: 'wrong1', label: 'Basic' },
           { value: 'wrong2', label: 'Neutral' },
-          { value: 'wrong3', label: 'Pure water' }
+          { value: 'wrong3', label: 'Alkaline' }
+        ]
+      },
+      {
+        id: 'states_of_matter',
+        question: 'What happens to the particles in a substance when it changes from liquid to gas?',
+        type: 'choice',
+        options: [
+          { value: 'wrong1', label: 'They move slower' },
+          { value: 'wrong2', label: 'They get smaller' },
+          { value: 'correct', label: 'They move faster and spread apart', correct: true },
+          { value: 'wrong3', label: 'They stick together more' }
+        ]
+      },
+      {
+        id: 'mixtures',
+        question: 'Which method would best separate salt dissolved in water?',
+        type: 'choice',
+        options: [
+          { value: 'wrong1', label: 'Filtration' },
+          { value: 'correct', label: 'Evaporation', correct: true },
+          { value: 'wrong2', label: 'Magnetism' },
+          { value: 'wrong3', label: 'Decanting' }
+        ]
+      },
+      {
+        id: 'oxidation',
+        question: 'When iron rusts, it undergoes:',
+        type: 'choice',
+        options: [
+          { value: 'wrong1', label: 'Physical weathering' },
+          { value: 'correct', label: 'Chemical oxidation', correct: true },
+          { value: 'wrong2', label: 'Nuclear decay' },
+          { value: 'wrong3', label: 'Biological breakdown' }
+        ]
+      },
+      {
+        id: 'metals_nonmetals',
+        question: 'Which property is typical of metals?',
+        type: 'choice',
+        options: [
+          { value: 'wrong1', label: 'Poor heat conduction' },
+          { value: 'wrong2', label: 'Brittle when solid' },
+          { value: 'correct', label: 'Good electrical conductivity', correct: true },
+          { value: 'wrong3', label: 'Dull appearance' }
         ]
       }
     ]
@@ -322,10 +553,10 @@ const assessmentPages = [
         question: 'Why do we need both the circulatory and respiratory systems working together?',
         type: 'choice',
         options: [
-          { value: 'correct', label: 'To transport oxygen from lungs to body cells and remove carbon dioxide', correct: true },
-          { value: 'wrong1', label: 'To help us digest food faster' },
-          { value: 'wrong2', label: 'To make our heart beat stronger' },
-          { value: 'wrong3', label: 'To control our body temperature' }
+          { value: 'wrong1', label: 'To digest food efficiently' },
+          { value: 'correct', label: 'To deliver oxygen and remove waste gases', correct: true },
+          { value: 'wrong2', label: 'To strengthen heart muscles' },
+          { value: 'wrong3', label: 'To regulate temperature' }
         ]
       },
       {
@@ -333,10 +564,10 @@ const assessmentPages = [
         question: 'What is the basic unit of all living things?',
         type: 'choice',
         options: [
-          { value: 'correct', label: 'Cell', correct: true },
           { value: 'wrong1', label: 'Tissue' },
           { value: 'wrong2', label: 'Organ' },
-          { value: 'wrong3', label: 'Organism' }
+          { value: 'correct', label: 'Cell', correct: true },
+          { value: 'wrong3', label: 'Molecule' }
         ]
       },
       {
@@ -344,10 +575,10 @@ const assessmentPages = [
         question: 'During photosynthesis, plants convert:',
         type: 'choice',
         options: [
-          { value: 'correct', label: 'Carbon dioxide and water into glucose and oxygen', correct: true },
-          { value: 'wrong1', label: 'Oxygen and glucose into carbon dioxide and water' },
-          { value: 'wrong2', label: 'Sunlight directly into food' },
-          { value: 'wrong3', label: 'Water into oxygen only' }
+          { value: 'wrong1', label: 'Oxygen into carbon dioxide' },
+          { value: 'correct', label: 'CO₂ and water into glucose', correct: true },
+          { value: 'wrong2', label: 'Sunlight into chlorophyll' },
+          { value: 'wrong3', label: 'Soil nutrients into energy' }
         ]
       },
       {
@@ -355,10 +586,54 @@ const assessmentPages = [
         question: 'Traits are passed from parents to offspring through:',
         type: 'choice',
         options: [
-          { value: 'correct', label: 'Genes and chromosomes', correct: true },
-          { value: 'wrong1', label: 'Blood type only' },
-          { value: 'wrong2', label: 'Environmental factors only' },
-          { value: 'wrong3', label: 'Diet and exercise' }
+          { value: 'wrong1', label: 'Blood type' },
+          { value: 'correct', label: 'Genes on chromosomes', correct: true },
+          { value: 'wrong2', label: 'Environmental learning' },
+          { value: 'wrong3', label: 'Dietary habits' }
+        ]
+      },
+      {
+        id: 'adaptation',
+        question: 'The Ethiopian wolf has adapted to high-altitude life. This adaptation occurred through:',
+        type: 'choice',
+        options: [
+          { value: 'wrong1', label: 'Learning from parents' },
+          { value: 'wrong2', label: 'Individual animal choices' },
+          { value: 'correct', label: 'Natural selection over generations', correct: true },
+          { value: 'wrong3', label: 'Changes in diet alone' }
+        ]
+      },
+      {
+        id: 'classification',
+        question: 'Which classification level is most specific?',
+        type: 'choice',
+        options: [
+          { value: 'wrong1', label: 'Kingdom' },
+          { value: 'wrong2', label: 'Family' },
+          { value: 'wrong3', label: 'Genus' },
+          { value: 'correct', label: 'Species', correct: true }
+        ]
+      },
+      {
+        id: 'digestive_system',
+        question: 'Where does most nutrient absorption occur in the human body?',
+        type: 'choice',
+        options: [
+          { value: 'wrong1', label: 'Stomach' },
+          { value: 'correct', label: 'Small intestine', correct: true },
+          { value: 'wrong2', label: 'Large intestine' },
+          { value: 'wrong3', label: 'Esophagus' }
+        ]
+      },
+      {
+        id: 'biodiversity',
+        question: 'Ethiopia is known for being the origin of which important crop?',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'Coffee', correct: true },
+          { value: 'wrong1', label: 'Wheat' },
+          { value: 'wrong2', label: 'Rice' },
+          { value: 'wrong3', label: 'Corn' }
         ]
       }
     ]
@@ -377,10 +652,10 @@ const assessmentPages = [
         question: 'What does CPU stand for?',
         type: 'choice',
         options: [
-          { value: 'correct', label: 'Central Processing Unit', correct: true },
           { value: 'wrong1', label: 'Computer Personal Unit' },
-          { value: 'wrong2', label: 'Central Program Unit' },
-          { value: 'wrong3', label: 'Computer Processing User' }
+          { value: 'wrong2', label: 'Central Program Utility' },
+          { value: 'correct', label: 'Central Processing Unit', correct: true },
+          { value: 'wrong3', label: 'Computer Programming Unit' }
         ]
       },
       {
@@ -388,10 +663,10 @@ const assessmentPages = [
         question: 'Which of these is the SAFEST way to create a password?',
         type: 'choice',
         options: [
-          { value: 'correct', label: 'Use a mix of letters, numbers, and symbols that only you know', correct: true },
-          { value: 'wrong1', label: 'Use your birthday and name' },
-          { value: 'wrong2', label: 'Use the same password for all accounts' },
-          { value: 'wrong3', label: 'Use simple words like "password123"' }
+          { value: 'wrong1', label: 'Use your name and birthday' },
+          { value: 'correct', label: 'Mix letters, numbers, and symbols uniquely', correct: true },
+          { value: 'wrong2', label: 'Reuse one password everywhere' },
+          { value: 'wrong3', label: 'Use common words' }
         ]
       },
       {
@@ -400,9 +675,9 @@ const assessmentPages = [
         type: 'choice',
         options: [
           { value: 'correct', label: 'Application software', correct: true },
-          { value: 'wrong1', label: 'System software' },
-          { value: 'wrong2', label: 'Hardware' },
-          { value: 'wrong3', label: 'Programming language' }
+          { value: 'wrong1', label: 'Operating system' },
+          { value: 'wrong2', label: 'Hardware component' },
+          { value: 'wrong3', label: 'Programming tool' }
         ]
       },
       {
@@ -410,10 +685,54 @@ const assessmentPages = [
         question: 'What should you do if you encounter cyberbullying online?',
         type: 'choice',
         options: [
-          { value: 'correct', label: 'Report it to a trusted adult and block the bully', correct: true },
-          { value: 'wrong1', label: 'Respond with mean comments back' },
-          { value: 'wrong2', label: 'Ignore it completely and do nothing' },
-          { value: 'wrong3', label: 'Share the bullying content with friends' }
+          { value: 'wrong1', label: 'Respond negatively to them' },
+          { value: 'wrong2', label: 'Ignore and stay silent' },
+          { value: 'correct', label: 'Report to adults and block', correct: true },
+          { value: 'wrong3', label: 'Share with your friends' }
+        ]
+      },
+      {
+        id: 'file_management',
+        question: 'Which file extension typically indicates an image file?',
+        type: 'choice',
+        options: [
+          { value: 'wrong1', label: '.docx' },
+          { value: 'correct', label: '.jpg', correct: true },
+          { value: 'wrong2', label: '.xlsx' },
+          { value: 'wrong3', label: '.pdf' }
+        ]
+      },
+      {
+        id: 'networks',
+        question: 'What does "WWW" stand for in a web address?',
+        type: 'choice',
+        options: [
+          { value: 'wrong1', label: 'World Wide Web' },
+          { value: 'correct', label: 'World Wide Web', correct: true },
+          { value: 'wrong2', label: 'Web World Wide' },
+          { value: 'wrong3', label: 'Wide World Web' }
+        ]
+      },
+      {
+        id: 'storage',
+        question: 'Which storage device typically has the largest capacity?',
+        type: 'choice',
+        options: [
+          { value: 'wrong1', label: 'USB flash drive' },
+          { value: 'wrong2', label: 'CD-ROM' },
+          { value: 'correct', label: 'External hard drive', correct: true },
+          { value: 'wrong3', label: 'Memory card' }
+        ]
+      },
+      {
+        id: 'coding_basics',
+        question: 'In programming, what is a "bug"?',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'An error in code', correct: true },
+          { value: 'wrong1', label: 'A computer virus' },
+          { value: 'wrong2', label: 'A security feature' },
+          { value: 'wrong3', label: 'A type of software' }
         ]
       }
     ]
@@ -432,9 +751,9 @@ const assessmentPages = [
         question: 'What are the three primary colors?',
         type: 'choice',
         options: [
-          { value: 'correct', label: 'Red, Blue, Yellow', correct: true },
           { value: 'wrong1', label: 'Red, Green, Blue' },
-          { value: 'wrong2', label: 'Yellow, Orange, Purple' },
+          { value: 'correct', label: 'Red, Blue, Yellow', correct: true },
+          { value: 'wrong2', label: 'Orange, Purple, Green' },
           { value: 'wrong3', label: 'Black, White, Gray' }
         ]
       },
@@ -443,10 +762,10 @@ const assessmentPages = [
         question: 'How many beats are in a measure of 4/4 time?',
         type: 'choice',
         options: [
-          { value: 'correct', label: 'Four beats', correct: true },
           { value: 'wrong1', label: 'Three beats' },
           { value: 'wrong2', label: 'Two beats' },
-          { value: 'wrong3', label: 'Eight beats' }
+          { value: 'correct', label: 'Four beats', correct: true },
+          { value: 'wrong3', label: 'Six beats' }
         ]
       },
       {
@@ -454,10 +773,65 @@ const assessmentPages = [
         question: 'Traditional Ethiopian church paintings often feature:',
         type: 'choice',
         options: [
-          { value: 'correct', label: 'Religious scenes with bright colors and symbolic figures', correct: true },
-          { value: 'wrong1', label: 'Abstract geometric patterns only' },
-          { value: 'wrong2', label: 'Realistic portraits of everyday people' },
-          { value: 'wrong3', label: 'Modern cityscapes' }
+          { value: 'wrong1', label: 'Abstract geometric designs' },
+          { value: 'correct', label: 'Religious scenes with symbolic figures', correct: true },
+          { value: 'wrong2', label: 'Realistic everyday portraits' },
+          { value: 'wrong3', label: 'Modern urban landscapes' }
+        ]
+      },
+      {
+        id: 'theater_basics',
+        question: 'In theater, what is a "monologue"?',
+        type: 'choice',
+        options: [
+          { value: 'correct', label: 'One character speaking alone', correct: true },
+          { value: 'wrong1', label: 'Two characters in dialogue' },
+          { value: 'wrong2', label: 'Background music during a scene' },
+          { value: 'wrong3', label: 'Stage lighting technique' }
+        ]
+      },
+      {
+        id: 'rhythm',
+        question: 'Traditional Ethiopian music often uses what time signature?',
+        type: 'choice',
+        options: [
+          { value: 'wrong1', label: '4/4 time exclusively' },
+          { value: 'wrong2', label: '3/4 waltz time' },
+          { value: 'correct', label: '6/8 or 12/8 time', correct: true },
+          { value: 'wrong3', label: '2/4 march time' }
+        ]
+      },
+      {
+        id: 'visual_composition',
+        question: 'In visual art, what is "perspective"?',
+        type: 'choice',
+        options: [
+          { value: 'wrong1', label: 'Using only bright colors' },
+          { value: 'correct', label: 'Creating depth on flat surfaces', correct: true },
+          { value: 'wrong2', label: 'Painting only portraits' },
+          { value: 'wrong3', label: 'Using geometric shapes' }
+        ]
+      },
+      {
+        id: 'drama',
+        question: 'What is the main purpose of rehearsal in theater?',
+        type: 'choice',
+        options: [
+          { value: 'wrong1', label: 'To memorize costumes' },
+          { value: 'wrong2', label: 'To design the stage' },
+          { value: 'correct', label: 'To practice and refine performance', correct: true },
+          { value: 'wrong3', label: 'To sell tickets' }
+        ]
+      },
+      {
+        id: 'ethiopian_instruments',
+        question: 'The krar is a traditional Ethiopian:',
+        type: 'choice',
+        options: [
+          { value: 'wrong1', label: 'Drum instrument' },
+          { value: 'correct', label: 'String instrument', correct: true },
+          { value: 'wrong2', label: 'Wind instrument' },
+          { value: 'wrong3', label: 'Percussion instrument' }
         ]
       },
       {
